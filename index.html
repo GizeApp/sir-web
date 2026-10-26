@@ -3,1110 +3,388 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>SIR · Auditorías de ciberseguridad para pymes en Rosario</title>
-<meta name="description" content="Encontramos las fallas de seguridad de tu pyme antes que un atacante. Auditoría de equipos, red y nube, solo lectura, con informe en 72 hs. Gran Rosario.">
-<meta name="theme-color" content="#0B0B0C">
-<meta property="og:type" content="website">
-<meta property="og:title" content="SIR · Seguridad Informática Rosario">
-<meta property="og:description" content="Encontramos tus fallas antes que un atacante. Hacé el chequeo gratis.">
-<meta property="og:image" content="og.png">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" type="image/png" href="favicon.png">
-<link rel="apple-touch-icon" href="favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@800;900&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap">
+<meta name="description" content="Chequeo de ciberseguridad gratis para pymes: 10 preguntas, 5 minutos y un semáforo con tus 3 riesgos principales.">
+<meta property="og:title" content="Chequeo SIR · ¿Cómo están los sistemas de tu empresa?">
+<meta property="og:image" content="https://gizeapp.github.io/sir-web/og.png">
+<link rel="icon" type="image/png" href="../favicon.png">
+<title>Chequeo gratis · SIR</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap">
 <style>
-/* =====================================================================
-   SIR · landing "centro de operaciones"
-   Negro + lima de marca; rojo/ámbar solo para severidades.
-   Hero 3D (Three.js): carrusel de equipos que se escanean uno por uno.
-   ===================================================================== */
-:root{
-  --ink:#0B0B0C; --ink-2:#0F0F11; --panel:#141417; --line:#232327; --line-2:#34343A;
-  --paper:#F4F2EE; --soft:#C6C5C0; --mute:#85858C;
-  --lime:#C6FF3D; --lime-2:#9BD411; --lime-glow:rgba(198,255,61,.45); --lime-dim:#161C0A;
-  --red:#FF4D42; --amber:#FFB72B; --green:#34D399;
-  --display:'JetBrains Mono',ui-monospace,'DejaVu Sans Mono',Consolas,monospace;
-  --brand:'Unbounded','Arial Black',sans-serif;
-  --body:'JetBrains Mono',ui-monospace,'DejaVu Sans Mono',Consolas,monospace;
-  --mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
-  color-scheme:dark;
-}
-*,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:90px}
-body{margin:0;background:var(--ink);color:var(--paper);font:400 16px/1.65 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
-img,svg,canvas{max-width:100%}
-a{color:inherit}
-p{margin:0}
-h1,h2,h3{margin:0;font-family:var(--display);font-weight:800;letter-spacing:-.035em;line-height:1.05;text-wrap:balance}
-::selection{background:var(--lime);color:var(--ink)}
-.wrap{max-width:1240px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
-.lime{color:var(--lime)}
-.mono{font-family:var(--mono)}
-.tag{font:500 12px/1.2 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--mute)}
-.tag b{color:var(--lime);font-weight:500}
-.h2{font-size:clamp(36px,6vw,82px);margin-top:20px}
-.lead{color:var(--soft);font-size:clamp(17px,1.5vw,20px);max-width:56ch;margin-top:22px}
-section{position:relative}
-.pad{padding-block:clamp(90px,13vw,170px)}
+  /* Una pregunta por pantalla (tráfico de IG = celular), resultado en semáforo + 3 prioridades + CTA lima.
+     Identidad SIR: un solo mundo oscuro (decisión de marca), lima como único acento. */
+  :root {
+    --ink:#0B0B0C; --panel:#151517; --line:#2A2A2E; --paper:#F4F2EE; --mute:#9A9A9F; --lime:#C6FF3D;
+    --red:#FF5A4E; --amber:#FFC23D; --green:#34D399;
+    --display:'JetBrains Mono', ui-monospace, 'DejaVu Sans Mono', Consolas, monospace;
+    --brand:'Unbounded', 'Arial Black', sans-serif;
+    --body:'JetBrains Mono', ui-monospace, 'DejaVu Sans Mono', Consolas, monospace;
+    --mono:'JetBrains Mono', ui-monospace, Consolas, monospace;
+    color-scheme: dark;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--ink); color:var(--paper); font:400 16px/1.6 var(--body); }
+  .wrap { max-width:680px; margin:0 auto; padding-block:28px 64px;
+          padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
 
-/* ---------- Fondo: grilla + scanlines ---------- */
-.bg-grid{position:fixed;inset:0;z-index:-2;pointer-events:none;
-  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
-  background-size:64px 64px;mask-image:radial-gradient(ellipse 90% 70% at 50% 20%,#000 30%,transparent 80%)}
-.scanlines{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.35;mix-blend-mode:overlay;
-  background:repeating-linear-gradient(to bottom,rgba(0,0,0,.25) 0 1px,transparent 1px 3px)}
+  header { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:40px; }
+  .brand { display:flex; align-items:baseline; font:800 26px/1 var(--brand); letter-spacing:-.03em; color:var(--paper); }
+  .brand svg { margin:0 .04em; }
+  .eyebrow { font:500 12px/1.2 var(--mono); letter-spacing:.24em; text-transform:uppercase; color:var(--mute); }
+  .eyebrow b { color:var(--lime); font-weight:500; }
 
-/* ---------- Botones ---------- */
-.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:12px;border:1px solid transparent;cursor:pointer;text-decoration:none;
-  font:600 15px/1 var(--display);letter-spacing:-.01em;padding:20px 30px;white-space:nowrap;
-  clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px));transition:transform .15s,background .2s,color .2s}
-.btn:focus-visible{outline:3px solid var(--paper);outline-offset:4px}
-.btn:active{transform:translateY(1px)}
-.btn-lime{background:var(--lime);color:var(--ink)}
-.btn-lime:hover{background:#D8FF73}
-.btn-line{background:transparent;color:var(--paper);border-color:var(--line-2);clip-path:none}
-.btn-line:hover{color:var(--lime);border-color:var(--lime)}
-.btn-ink{background:var(--ink);color:var(--lime)}
-.btn-sm{padding:13px 18px;font-size:13px}
-.arr{transition:transform .2s}.btn:hover .arr{transform:translateX(4px)}
+  h1, h2, h3 { font-family:var(--display); font-weight:800; letter-spacing:-.03em; margin:0; text-wrap:balance; }
+  h1 { font-size:clamp(34px, 8vw, 52px); line-height:1.05; }
+  h2 { font-size:clamp(24px, 5.4vw, 32px); line-height:1.15; }
+  h3 { font-size:18px; font-weight:600; letter-spacing:-.01em; line-height:1.3; }
+  .lime { color:var(--lime); }
+  .lead { color:#C9C8C4; font-size:18px; max-width:56ch; margin:20px 0 0; }
+  .note { color:var(--mute); font-size:14px; }
 
-/* ---------- Logo ---------- */
-.logo{display:inline-flex;align-items:baseline;font:800 22px/1 var(--brand);letter-spacing:-.03em;text-decoration:none;color:var(--paper)}
-.logo svg{display:inline-block;width:.42em;height:.7em;margin:0 .05em}
+  /* Intro */
+  .meta { display:flex; flex-wrap:wrap; gap:8px 20px; margin:28px 0 36px; font:500 13px/1 var(--mono); color:var(--mute); letter-spacing:.06em; }
+  .meta span::before { content:"■ "; color:var(--lime); }
+  .fields { display:grid; gap:16px; margin-bottom:28px; }
+  label.f { display:grid; gap:8px; font-size:14px; font-weight:500; color:#C9C8C4; }
+  label.f small { color:var(--mute); font-weight:400; }
+  input[type=text], select { width:100%; background:var(--panel); color:var(--paper); border:1px solid var(--line); border-radius:12px;
+    padding:14px 16px; font:400 16px var(--body); }
+  input[type=text]:focus, select:focus { outline:2px solid var(--lime); outline-offset:1px; border-color:transparent; }
 
-/* ---------- Barra superior tipo consola ---------- */
-.bar{position:fixed;top:0;left:0;right:0;z-index:50;padding-top:env(safe-area-inset-top,0px);
-  background:linear-gradient(to bottom,rgba(11,11,12,.92),rgba(11,11,12,.72));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.bar-in{display:flex;align-items:center;gap:24px;height:68px}
-.status{display:flex;align-items:center;gap:10px;font:500 11px/1 var(--mono);letter-spacing:.16em;color:var(--mute);text-transform:uppercase;padding-left:22px;border-left:1px solid var(--line)}
-.status i{width:7px;height:7px;background:var(--lime);box-shadow:0 0 10px var(--lime);animation:blink 1.6s steps(2) infinite}
-@keyframes blink{50%{opacity:.2}}
-.links{display:flex;gap:4px;margin-left:auto}
-.links a{font:500 13px/1 var(--mono);color:var(--soft);text-decoration:none;padding:10px 12px;letter-spacing:.02em}
-.links a::before{content:"/";color:var(--line-2);margin-right:6px}
-.links a:hover{color:var(--lime)}
-.progress{position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:var(--lime);transform-origin:0 50%;transform:scaleX(0);box-shadow:0 0 12px var(--lime)}
-@media (max-width:980px){.links{display:none}.bar .btn{margin-left:auto}}
-@media (max-width:520px){.status{display:none}}
+  .btn { display:inline-flex; align-items:center; justify-content:center; gap:12px; border:0; cursor:pointer; text-decoration:none;
+         font:600 16px/1 var(--display); letter-spacing:-.01em; border-radius:999px; padding:20px 30px; }
+  .btn-lime { background:var(--lime); color:var(--ink); }
+  .btn-ink { background:var(--ink); color:var(--lime); }
+  .btn-ghost { background:transparent; color:var(--mute); padding:14px 4px; font:500 14px/1 var(--body); }
+  .btn:focus-visible { outline:3px solid var(--paper); outline-offset:3px; }
+  .btn-ghost:hover { color:var(--paper); }
+  .privacy { margin-top:22px; }
 
-/* ---------- Cursor retícula (solo mouse) ---------- */
-.reticle{position:fixed;left:0;top:0;width:34px;height:34px;margin:-17px 0 0 -17px;z-index:70;pointer-events:none;opacity:0;transition:opacity .2s,width .2s,height .2s,margin .2s}
-.reticle::before,.reticle::after{content:"";position:absolute;inset:0;border:1px solid var(--lime);
-  clip-path:polygon(0 0,30% 0,30% 2px,2px 2px,2px 30%,0 30%,0 0,70% 0,100% 0,100% 30%,calc(100% - 2px) 30%,calc(100% - 2px) 2px,70% 2px,70% 0,100% 70%,100% 100%,70% 100%,70% calc(100% - 2px),calc(100% - 2px) calc(100% - 2px),calc(100% - 2px) 70%,100% 70%,30% 100%,0 100%,0 70%,2px 70%,2px calc(100% - 2px),30% calc(100% - 2px))}
-.reticle::after{inset:15px;border:0;background:var(--lime);clip-path:none;border-radius:50%}
-.reticle.big{width:58px;height:58px;margin:-29px 0 0 -29px}
-.reticle.big::after{inset:27px}
+  /* Progreso: 10 tramos */
+  .progress { display:grid; grid-template-columns:repeat(10, 1fr); gap:5px; margin-bottom:36px; }
+  .progress i { height:4px; border-radius:2px; background:var(--line); transition:background .2s; }
+  .progress i.done { background:var(--lime); }
+  .progress i.now { background:var(--paper); }
 
-/* ---------- Arranque ---------- */
-#boot{position:fixed;inset:0;z-index:100;background:var(--ink);display:grid;place-items:center;font:500 14px/1.9 var(--mono);color:var(--mute);transition:transform .7s cubic-bezier(.7,0,.2,1)}
-#boot.out{transform:translateY(-100%)}
-#boot .l{opacity:0;animation:in .01s forwards}
-#boot .ok{color:var(--lime)}
-@keyframes in{to{opacity:1}}
+  fieldset { border:0; padding:0; margin:0; min-width:0; }
+  legend { padding:0; margin-bottom:28px; }
+  .qtema { display:block; margin-bottom:14px; }
+  .opts { display:grid; gap:12px; }
+  .opt { position:relative; display:grid; grid-template-columns:40px 1fr; gap:14px; align-items:start; cursor:pointer;
+         background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:18px; transition:border-color .15s, background .15s; }
+  .opt:hover { border-color:#4A4A50; }
+  .opt input { position:absolute; opacity:0; pointer-events:none; }
+  .opt .k { display:grid; place-items:center; width:40px; height:40px; border-radius:10px; border:1px solid var(--line);
+            font:600 15px/1 var(--display); color:var(--mute); }
+  .opt .t { min-width:0; padding-top:8px; line-height:1.45; }
+  .opt:has(input:checked) { border-color:var(--lime); background:#1A1F10; }
+  .opt:has(input:checked) .k { background:var(--lime); color:var(--ink); border-color:var(--lime); }
+  .opt:has(input:focus-visible) { outline:2px solid var(--paper); outline-offset:2px; }
+  .opt.unsure .t { color:var(--mute); }
+  .nav { display:flex; justify-content:space-between; align-items:center; margin-top:24px; min-height:48px; }
 
-/* =============== HERO =============== */
-.hero{min-height:100svh;display:grid;align-items:center;padding-block:120px 70px;overflow:hidden}
-.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:30px;align-items:center}
-.hero h1{font-size:clamp(32px,5.3vw,80px);margin-top:26px;overflow-wrap:break-word}
-@media (max-width:520px){.hero h1{font-size:8.6vw}}
-.hero h1::after{content:"_";color:var(--lime);animation:blink 1s steps(2) infinite;margin-left:.05em}
-.hero h1 .stroke{color:transparent;-webkit-text-stroke:1.5px var(--paper)}
-.kicker{display:inline-flex;align-items:center;gap:12px;font:500 12px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--lime)}
-.kicker::before{content:"";width:34px;height:1px;background:var(--lime)}
-.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:38px}
-.facts{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:8px 34px;margin-top:44px;padding-top:26px;border-top:1px solid var(--line)}
-.facts b{display:block;font:800 30px/1 var(--display);letter-spacing:-.03em}
-.facts span{font:500 11px/1.4 var(--mono);color:var(--mute);letter-spacing:.12em;text-transform:uppercase}
+  /* Resultado */
+  .verdict { display:grid; grid-template-columns:auto 1fr; gap:28px; align-items:center; margin:8px 0 36px; }
+  .lights { display:grid; gap:10px; background:#060607; border:1px solid var(--line); border-radius:999px; padding:12px; }
+  .lights i { width:44px; height:44px; border-radius:50%; background:#222225; }
+  .lights i.on.r { background:var(--red); box-shadow:0 0 28px var(--red); }
+  .lights i.on.a { background:var(--amber); box-shadow:0 0 28px var(--amber); }
+  .lights i.on.g { background:var(--green); box-shadow:0 0 28px var(--green); }
+  .score { font:500 14px/1 var(--mono); color:var(--mute); margin-top:14px; letter-spacing:.04em; font-variant-numeric:tabular-nums; }
+  .reading { color:#C9C8C4; margin:12px 0 0; }
+  .lvl-r { color:var(--red); } .lvl-a { color:var(--amber); } .lvl-g { color:var(--green); }
 
-.stage{position:relative;height:min(78vh,700px);min-height:460px}
-#three{position:absolute;inset:-40px -80px -20px -40px;width:calc(100% + 120px);height:calc(100% + 60px);display:block}
-.hud{position:absolute;left:0;right:0;bottom:0;display:grid;grid-template-columns:1fr auto;gap:14px;align-items:end;pointer-events:none}
-.hud-card{pointer-events:auto;background:rgba(15,15,17,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line-2);padding:18px 20px;max-width:430px;
-  clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%)}
-.hud-top{display:flex;justify-content:space-between;gap:12px;font:500 11px/1 var(--mono);letter-spacing:.14em;color:var(--mute);text-transform:uppercase}
-.hud-top .scan{color:var(--lime)}
-.hud-card h3{font-size:20px;letter-spacing:-.02em;margin-top:12px;line-height:1.2}
-.hud-card p{color:var(--soft);font-size:14px;margin-top:8px;line-height:1.5}
-.hud-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.pill{font:600 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;padding:6px 9px;border:1px solid var(--line-2);color:var(--mute)}
-.pill.crit{color:var(--red);border-color:rgba(255,77,66,.5);background:rgba(255,77,66,.08)}
-.pill.high{color:var(--amber);border-color:rgba(255,183,43,.5);background:rgba(255,183,43,.07)}
-.pill.fix{color:var(--lime);border-color:rgba(198,255,61,.45);background:rgba(198,255,61,.06)}
-.pager{pointer-events:auto;display:flex;gap:6px}
-.pager button{all:unset;cursor:pointer;width:26px;height:4px;background:var(--line-2);transition:background .2s,width .3s}
-.pager button[aria-current="true"]{background:var(--lime);width:44px}
-.pager button:focus-visible{outline:2px solid var(--paper);outline-offset:4px}
-.nogl .hud{position:static;margin-top:20px}
-@media (max-width:980px){
-  .hero-grid{grid-template-columns:minmax(0,1fr)}
-  .stage{height:520px;min-height:0;margin-top:10px}
-  #three{inset:-20px -20px 60px -20px;width:calc(100% + 40px);height:calc(100% - 40px)}
-}
-@media (max-width:520px){.facts{grid-template-columns:repeat(3,1fr);gap:8px 14px}.facts b{font-size:22px}.stage{height:500px}}
+  .prios { display:grid; gap:14px; margin:20px 0 40px; padding:0; list-style:none; counter-reset:p; }
+  .prio { display:grid; grid-template-columns:44px 1fr; gap:14px; background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:20px; }
+  .prio::before { counter-increment:p; content:counter(p); font:800 30px/1 var(--display); color:var(--lime); }
+  .prio > div { min-width:0; }
+  .prio p { margin:8px 0 0; color:#C9C8C4; font-size:15px; }
+  .prio .fix { color:var(--paper); }
+  .prio .fix b { color:var(--lime); font-weight:600; }
+  .tags { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+  .tag { font:500 11px/1 var(--mono); letter-spacing:.12em; text-transform:uppercase; padding:6px 9px; border-radius:6px; border:1px solid var(--line); color:var(--mute); }
+  .tag.sev-C { color:var(--red); border-color:#5A2622; }
+  .tag.sev-u { color:var(--amber); border-color:#5A4718; }
+  .tag.sev-B { color:var(--amber); border-color:#5A4718; }
 
-/* =============== CONTADORES (datos reales del toolkit) =============== */
-.counts{border-block:1px solid var(--line);background:var(--ink-2)}
-.counts .wrap{display:grid;grid-template-columns:repeat(5,1fr)}
-.count{padding:34px 22px;border-left:1px solid var(--line)}
-.count:first-child{border-left:0;padding-left:0}
-.count b{display:block;font:800 clamp(34px,4vw,54px)/1 var(--display);letter-spacing:-.04em;color:var(--paper);font-variant-numeric:tabular-nums}
-.count span{display:block;margin-top:10px;font:500 11px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
-.count b small{font-size:.4em;color:var(--lime);margin-left:4px;letter-spacing:0}
-@media (max-width:900px){.counts .wrap{grid-template-columns:repeat(2,1fr)}.count{border-left:0;border-top:1px solid var(--line);padding-left:0}.count:last-child{grid-column:span 2}}
+  .cta { background:var(--lime); color:var(--ink); border-radius:24px; padding:30px 26px; }
+  .cta p { margin:12px 0 22px; font-size:16px; max-width:52ch; }
+  .cta .row { display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+  .cta .btn-ghost { color:var(--ink); text-decoration:underline; text-underline-offset:3px; }
+  .cta .num { margin-top:16px; font:500 13px/1.4 var(--mono); opacity:.7; user-select:all; }
+  .disclaimer { margin-top:28px; }
+  .copied { font:500 13px var(--mono); color:var(--ink); }
 
-/* =============== CADENA DE ATAQUE =============== */
-.chain-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:30px}
-.switch{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:14px;padding:12px 16px 12px 12px;border:1px solid var(--line-2);font:600 13px/1 var(--mono);letter-spacing:.06em;color:var(--soft)}
-.switch .t{position:relative;width:54px;height:28px;background:#2A1311;border:1px solid rgba(255,77,66,.5);transition:background .3s,border-color .3s}
-.switch .t::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;background:var(--red);transition:transform .3s cubic-bezier(.6,0,.2,1),background .3s}
-.switch[aria-checked="true"] .t{background:var(--lime-dim);border-color:var(--lime)}
-.switch[aria-checked="true"] .t::after{transform:translateX(26px);background:var(--lime)}
-.switch .lbl-off{color:var(--red)}.switch .lbl-on{color:var(--mute)}
-.switch[aria-checked="true"] .lbl-off{color:var(--mute)}.switch[aria-checked="true"] .lbl-on{color:var(--lime)}
-.switch:focus-visible{outline:2px solid var(--paper);outline-offset:3px}
-.chain{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:46px;margin-top:70px}
-.link-line{position:absolute;inset:0;pointer-events:none}
-.c-node{position:relative;z-index:1;background:var(--panel);border:1px solid var(--line);padding:22px 20px 24px;transition:border-color .4s,background .4s,opacity .4s}
-.c-node .n{font:700 12px/1 var(--mono);color:var(--red);letter-spacing:.1em}
-.c-node h3{font-size:19px;letter-spacing:-.02em;margin-top:14px;line-height:1.15}
-.c-node p{color:var(--soft);font-size:14px;margin-top:10px;line-height:1.5}
-.c-node .st{display:inline-block;margin-top:14px;font:600 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--red)}
-.c-node.hit{border-color:rgba(255,77,66,.7);background:linear-gradient(180deg,rgba(255,77,66,.10),var(--panel) 70%)}
-.c-node.safe{border-color:rgba(198,255,61,.35);opacity:.6}
-.c-node.safe .n,.c-node.safe .st{color:var(--lime)}
-.barrier{position:absolute;z-index:2;top:50%;width:46px;display:grid;justify-items:center;gap:6px;transform:translate(-50%,-50%) scale(.4);opacity:0;transition:opacity .35s,transform .35s cubic-bezier(.3,1.6,.5,1)}
-.barrier i{width:34px;height:34px;display:grid;place-items:center;background:var(--lime);color:var(--ink);font:800 16px/1 var(--display);clip-path:polygon(50% 0,100% 25%,100% 70%,50% 100%,0 70%,0 25%)}
-.barrier span{font:600 9.5px/1.2 var(--mono);color:var(--lime);text-align:center;letter-spacing:.06em;text-transform:uppercase;width:110px}
-.on .barrier{opacity:1;transform:translate(-50%,-50%) scale(1)}
-.packet{position:absolute;z-index:3;width:14px;height:14px;margin:-7px 0 0 -7px;background:var(--red);box-shadow:0 0 18px 4px rgba(255,77,66,.6);left:0;top:0;transform:rotate(45deg)}
-.on .packet{background:var(--red)}
-.chain-out{margin-top:34px;font:500 15px/1.5 var(--mono);color:var(--red);min-height:1.5em}
-.on .chain-out{color:var(--lime)}
-@media (max-width:980px){
-  .chain{grid-template-columns:1fr;gap:56px;padding-left:0}
-  .barrier{top:auto;left:50%!important}
-}
-
-/* =============== MAPA DE RED =============== */
-.map-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:30px;margin-top:60px;align-items:stretch}
-.map{position:relative;border:1px solid var(--line);background:radial-gradient(ellipse at 50% 40%,#121512,var(--ink-2) 70%);padding:10px}
-.map svg{width:100%;height:auto;display:block}
-.map .lk{stroke:var(--line-2);stroke-width:1.5;fill:none}
-.map .flow{stroke:var(--lime);stroke-width:2;fill:none;stroke-dasharray:4 16;animation:flow 1.6s linear infinite;opacity:.65}
-@keyframes flow{to{stroke-dashoffset:-40}}
-.map .nd{cursor:pointer;outline:none}
-.map .nd circle.c{fill:#111113;stroke:var(--line-2);stroke-width:1.5;transition:stroke .2s,fill .2s}
-.map .nd circle.halo{fill:none;stroke:var(--lime);stroke-width:1;opacity:0;transform-box:fill-box;transform-origin:center}
-.map .nd text{font:600 13px var(--mono);fill:var(--soft);text-anchor:middle;dominant-baseline:central;pointer-events:none}
-.map .nd text.lbl{font:500 11px var(--mono);fill:var(--mute);letter-spacing:.06em}
-.map .nd:hover circle.c,.map .nd:focus-visible circle.c{stroke:var(--lime)}
-.map .nd.sel circle.c{fill:var(--lime-dim);stroke:var(--lime)}
-.map .nd.sel text{fill:var(--lime)}
-.map .nd.sel circle.halo{animation:halo 1.8s ease-out infinite}
-@keyframes halo{0%{opacity:.8;transform:scale(1)}100%{opacity:0;transform:scale(1.9)}}
-.map-note{position:absolute;left:18px;top:14px;font:500 11px var(--mono);letter-spacing:.14em;color:var(--mute);text-transform:uppercase}
-.panel{border:1px solid var(--line);background:var(--panel);padding:30px;display:flex;flex-direction:column}
-.panel .tag{color:var(--lime)}
-.panel h3{font-size:30px;margin-top:14px}
-.panel ul{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:0}
-.panel li{display:grid;grid-template-columns:auto 1fr;gap:14px;padding:13px 0;border-top:1px solid var(--line);font-size:15px;color:var(--soft)}
-.panel li code{font:500 11px/1.9 var(--mono);color:var(--lime);letter-spacing:.04em}
-.panel .foot{margin-top:auto;padding-top:22px;font:500 11px/1.5 var(--mono);color:var(--mute);letter-spacing:.1em;text-transform:uppercase}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-.chips button{all:unset;cursor:pointer;font:500 12px/1 var(--mono);padding:9px 12px;border:1px solid var(--line-2);color:var(--soft)}
-.chips button[aria-pressed="true"]{border-color:var(--lime);color:var(--lime);background:var(--lime-dim)}
-.chips button:focus-visible{outline:2px solid var(--paper);outline-offset:2px}
-@media (max-width:980px){.map-grid{grid-template-columns:1fr}}
-
-/* =============== CONSOLA + INDICADOR =============== */
-.ops{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;margin-top:60px}
-.term{background:#070708;border:1px solid var(--line-2);font:400 13.5px/1.75 var(--mono);color:var(--soft);min-height:440px;display:flex;flex-direction:column}
-.term-top{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);font-size:11px;color:var(--mute);letter-spacing:.1em}
-.term-top i{width:10px;height:10px;border-radius:50%;background:var(--line-2)}
-.term-top i:first-child{background:var(--red)}.term-top i:nth-child(2){background:var(--amber)}.term-top i:nth-child(3){background:var(--lime)}
-.term-top span{margin-left:auto}
-.term pre{margin:0;padding:18px 20px;white-space:pre-wrap;word-break:break-word;flex:1}
-.term .p{color:var(--lime)} .term .x{color:var(--red)} .term .w{color:var(--amber)} .term .ok{color:var(--lime)} .term .d{color:var(--mute)}
-.caret{display:inline-block;width:8px;height:1.1em;background:var(--lime);vertical-align:text-bottom;animation:blink 1s steps(2) infinite}
-.gauge{border:1px solid var(--line);background:var(--panel);padding:28px;display:flex;flex-direction:column}
-.gauge svg{width:100%;max-width:380px;margin:18px auto 0;display:block;overflow:visible}
-.needle{transform-origin:200px 200px;transform:rotate(-90deg);transition:transform 2.2s cubic-bezier(.2,.9,.2,1)}
-.ops.run .needle{transform:rotate(-7.5deg)}
-.g-val{font:800 44px/1 var(--display);fill:var(--amber);text-anchor:middle;letter-spacing:-.03em}
-.g-sub{font:500 12px var(--mono);fill:var(--mute);text-anchor:middle;letter-spacing:.14em}
-.sev{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
-.sev div{border:1px solid var(--line);padding:14px}
-.sev b{display:block;font:800 30px/1 var(--display);font-variant-numeric:tabular-nums}
-.sev span{display:block;margin-top:8px;font:500 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
-.sev .r b{color:var(--red)}.sev .a b{color:var(--amber)}.sev .g b{color:var(--lime)}
-.example{display:inline-block;font:500 10px/1 var(--mono);letter-spacing:.16em;padding:6px 8px;border:1px dashed var(--line-2);color:var(--mute);align-self:flex-start}
-@media (max-width:980px){.ops{grid-template-columns:1fr}.term{min-height:0}}
-
-/* =============== PROTOCOLO =============== */
-.proto{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:60px;border:1px solid var(--line)}
-.p-step{padding:38px 32px 40px;border-left:1px solid var(--line);position:relative;overflow:hidden;transition:background .3s}
-.p-step:first-child{border-left:0}
-.p-step:hover{background:var(--panel)}
-.p-step .big{font:900 120px/.8 var(--display);color:transparent;-webkit-text-stroke:1.2px var(--line-2);letter-spacing:-.06em;transition:-webkit-text-stroke-color .3s,color .3s}
-.p-step:hover .big{-webkit-text-stroke-color:var(--lime)}
-.p-step h3{font-size:28px;margin-top:26px}
-.p-step p{color:var(--soft);margin-top:12px;max-width:34ch}
-.p-step .tag{display:block;margin-top:22px}
-.p-step::after{content:"";position:absolute;left:0;top:0;height:2px;width:100%;background:var(--lime);transform:scaleX(0);transform-origin:0;transition:transform .5s}
-.p-step:hover::after{transform:scaleX(1)}
-@media (max-width:900px){.proto{grid-template-columns:1fr}.p-step{border-left:0;border-top:1px solid var(--line)}.p-step:first-child{border-top:0}}
-
-/* =============== PLANES =============== */
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:60px;align-items:stretch;perspective:1200px}
-.plan{position:relative;background:var(--panel);border:1px solid var(--line);padding:34px 30px;display:flex;flex-direction:column;gap:10px;transform-style:preserve-3d;transition:transform .2s ease-out,border-color .3s}
-.plan:hover{border-color:var(--line-2)}
-.plan.best{border-color:transparent;background:linear-gradient(var(--panel),var(--panel)) padding-box,conic-gradient(from var(--a,0deg),var(--lime),transparent 30%,transparent 70%,var(--lime)) border-box;border:1px solid transparent;animation:spin 5s linear infinite}
-@property --a{syntax:'<angle>';inherits:false;initial-value:0deg}
-@keyframes spin{to{--a:360deg}}
-.plan .badge{position:absolute;top:-1px;right:24px;font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;background:var(--lime);color:var(--ink);padding:8px 10px}
-.plan .lvl{font:500 11px/1 var(--mono);letter-spacing:.16em;color:var(--lime);text-transform:uppercase}
-.plan h3{font-size:27px;letter-spacing:-.03em}
-.plan .for{color:var(--mute);font-size:15px}
-.plan ul{list-style:none;padding:0;margin:16px 0 26px;display:grid;gap:11px;color:var(--soft);font-size:15px}
-.plan li{display:flex;gap:10px}.plan li::before{content:"+";font:700 14px/1.5 var(--mono);color:var(--lime);flex:none}
-.plan .btn{margin-top:auto}
-.note{margin-top:22px;color:var(--mute);font-size:14px}
-@media (max-width:900px){.plans{grid-template-columns:1fr}}
-
-/* =============== CHEQUEO (bloque lima con cerradura) =============== */
-.unlock{position:relative;overflow:hidden;background:var(--lime);color:var(--ink);padding:clamp(40px,7vw,90px);display:grid;grid-template-columns:1.3fr .7fr;gap:40px;align-items:center;
-  clip-path:polygon(0 0,calc(100% - 40px) 0,100% 40px,100% 100%,40px 100%,0 calc(100% - 40px))}
-.unlock .tag{color:rgba(11,11,12,.6)}.unlock .tag b{color:var(--ink)}
-.unlock h2{font-size:clamp(34px,5vw,68px);margin-top:16px}
-.unlock p{margin-top:18px;font-size:18px;max-width:46ch;color:rgba(11,11,12,.82)}
-.unlock .btn{margin-top:32px}
-.lock{justify-self:center;width:min(240px,60vw);transition:transform .6s cubic-bezier(.3,1.4,.5,1)}
-.lock .shackle{transform-origin:70% 100%;transition:transform .6s cubic-bezier(.3,1.4,.5,1)}
-.unlock:hover .shackle,.unlock.open .shackle{transform:translateY(-18px) rotate(-28deg)}
-.unlock .bigtext{position:absolute;right:-2%;bottom:-18%;font:900 clamp(140px,22vw,320px)/1 var(--display);letter-spacing:-.06em;color:rgba(11,11,12,.06);pointer-events:none}
-@media (max-width:760px){.unlock{grid-template-columns:1fr}.lock{justify-self:start;width:140px;order:-1}}
-
-/* =============== FAQ =============== */
-.faq{display:grid;gap:0;margin-top:56px;border-top:1px solid var(--line);max-width:920px}
-details{border-bottom:1px solid var(--line)}
-summary{cursor:pointer;list-style:none;display:grid;grid-template-columns:60px 1fr auto;gap:12px;align-items:center;padding:26px 0;font:600 clamp(17px,1.8vw,21px)/1.3 var(--body)}
-summary::-webkit-details-marker{display:none}
-summary .q{font:500 12px/1 var(--mono);color:var(--mute)}
-summary::after{content:"+";font:400 26px/1 var(--mono);color:var(--lime);transition:transform .25s}
-details[open] summary::after{transform:rotate(45deg)}
-summary:hover{color:var(--lime)}
-summary:focus-visible{outline:2px solid var(--paper);outline-offset:4px}
-details p{color:var(--soft);padding:0 0 28px 72px;max-width:72ch}
-@media (max-width:600px){summary{grid-template-columns:36px 1fr auto}details p{padding-left:48px}}
-
-/* =============== CIERRE + FOOTER =============== */
-.final{text-align:center;display:grid;justify-items:center}
-.final h2{font-size:clamp(44px,8vw,120px);max-width:13ch}
-.final .cta-row{justify-content:center}
-.wa{margin-top:26px;font:500 14px var(--mono);color:var(--mute);user-select:all}
-footer{border-top:1px solid var(--line);overflow:hidden}
-.mega{font:900 clamp(120px,30vw,420px)/.8 var(--brand);letter-spacing:-.07em;color:transparent;-webkit-text-stroke:1px var(--line-2);text-align:center;margin:40px 0 -2.5vw;user-select:none;display:flex;justify-content:center;align-items:baseline}
-.mega svg{width:.36em;height:.72em;margin:0 .04em;opacity:.9}
-.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px 30px;padding-block:28px;color:var(--mute);font-size:13px;border-top:1px solid var(--line);position:relative;background:var(--ink)}
-.foot p{max-width:70ch}
-
-/* Revelado suave (el contenido ya está visible; solo se desplaza un poco) */
-.rv{transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .9s}
-.js .rv:not(.in){transform:translateY(28px);opacity:.15}
-
-@media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  *,*::before,*::after{animation:none!important;transition:none!important}
-  .js .rv:not(.in){transform:none;opacity:1}
-  .scanlines{display:none}
-}
+  @media (max-width:440px) {
+    .verdict { grid-template-columns:1fr; justify-items:start; }
+    .lights { grid-auto-flow:column; }
+    .btn { width:100%; }
+    .cta .row { flex-direction:column; align-items:stretch; }
+  }
+  @media (prefers-reduced-motion:reduce) { * { transition:none !important; } }
 </style>
-<script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
-<div class="bg-grid" aria-hidden="true"></div>
-<div class="scanlines" aria-hidden="true"></div>
-<div class="reticle" aria-hidden="true"></div>
 
-<div id="boot" aria-hidden="true"><div id="bootlog"></div></div>
+<div class="wrap">
+  <header>
+    <a class="brand" href="../" aria-label="SIR, volver al inicio" style="text-decoration:none">S<svg width="12" height="19" viewBox="0 0 12 19" aria-hidden="true"><circle cx="6" cy="6" r="6" fill="#C6FF3D"/><path d="M3 6h6l1.8 13H1.2z" fill="#C6FF3D"/></svg>R</a>
+    <div class="eyebrow">Seguridad Informática <b>/</b> Rosario</div>
+  </header>
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="kh" viewBox="0 0 12 20"><circle cx="6" cy="6" r="6" fill="#C6FF3D"/><path d="M3.4 6h5.2L10.6 20H1.4z" fill="#C6FF3D"/></symbol>
-</svg>
-
-<header class="bar">
-  <div class="wrap bar-in">
-    <a class="logo" href="#top" aria-label="SIR, inicio">S<svg aria-hidden="true"><use href="#kh"/></svg>R</a>
-    <div class="status"><i></i>Rosario · auditando pymes</div>
-    <nav class="links" aria-label="Principal">
-      <a href="#ataque">ataque</a><a href="#red">qué revisamos</a><a href="#informe">informe</a><a href="#planes">planes</a><a href="#faq">faq</a>
-    </nav>
-    <a class="btn btn-lime btn-sm" href="chequeo/">Chequeo gratis</a>
-  </div>
-  <div class="progress" id="progress"></div>
-</header>
-
-<main id="top">
-
-<!-- ================= HERO ================= -->
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <span class="kicker">Auditorías de ciberseguridad · Gran Rosario</span>
-      <h1 data-decrypt>Encontramos tus fallas <span class="lime">antes que</span> <span class="stroke">un atacante.</span></h1>
-      <p class="lead">Revisamos las computadoras, la red y la nube de tu pyme y te entregamos un informe claro: qué está expuesto, qué es urgente y cómo resolverlo. Solo lectura, sin frenar nada.</p>
-      <div class="cta-row">
-        <a class="btn btn-lime" href="chequeo/">Hacé el chequeo gratis <span class="arr" aria-hidden="true">→</span></a>
-        <a class="btn btn-line" href="https://wa.me/5493413490705?text=Hola%20SIR!%20Quiero%20consultar%20por%20una%20auditor%C3%ADa." target="_blank" rel="noopener">Hablar por WhatsApp</a>
+  <!-- 1 · Intro -->
+  <section id="intro">
+    <h1>¿Cómo están los sistemas de tu <span class="lime">empresa</span>?</h1>
+    <p class="lead">Respondé 10 preguntas simples y te mostramos un semáforo con los 3 riesgos más importantes y cómo resolverlos.</p>
+    <div class="meta"><span>10 preguntas</span><span>5 minutos</span><span>Sin tecnicismos</span><span>Sin cargo</span></div>
+    <form id="introForm">
+      <div class="fields">
+        <label class="f" for="empresa">Empresa <small>(opcional)</small>
+          <input type="text" id="empresa" autocomplete="organization" placeholder="Ej.: Ferretería del Centro">
+        </label>
+        <label class="f" for="rubro">Rubro <small>(opcional)</small>
+          <input type="text" id="rubro" placeholder="Ej.: comercio, estudio contable, logística">
+        </label>
+        <label class="f" for="pcs">¿Cuántas computadoras usan?
+          <select id="pcs">
+            <option value="1 a 5">1 a 5</option>
+            <option value="6 a 15" selected>6 a 15</option>
+            <option value="16 a 50">16 a 50</option>
+            <option value="más de 50">Más de 50</option>
+          </select>
+        </label>
       </div>
-      <div class="facts">
-        <div><b>½ día</b><span>en tu empresa</span></div>
-        <div><b>72 hs</b><span>informe listo</span></div>
-        <div><b>0</b><span>cambios en tus equipos</span></div>
-      </div>
+      <button class="btn btn-lime" type="submit">Empezar el chequeo <span aria-hidden="true">→</span></button>
+    </form>
+    <p class="note privacy">No te vamos a pedir contraseñas ni datos internos. Tus respuestas no se envían a ningún lado: quedan en tu pantalla hasta que vos decidas compartirlas.</p>
+  </section>
+
+  <!-- 2 · Preguntas -->
+  <section id="quiz" hidden>
+    <div class="progress" id="progress" aria-hidden="true"></div>
+    <form id="qForm"></form>
+    <div class="nav">
+      <button class="btn btn-ghost" type="button" id="back">← Anterior</button>
+      <span class="eyebrow" id="count"></span>
     </div>
+  </section>
 
-    <div class="stage" id="stage">
-      <canvas id="three" aria-hidden="true"></canvas>
-      <div class="hud">
-        <div class="hud-card" aria-live="polite">
-          <div class="hud-top"><span class="scan" id="hudScan">■ Escaneando 01/05</span><span id="hudDev">Notebook</span></div>
-          <h3 id="hudTitle" data-decrypt>Disco sin cifrar</h3>
-          <p id="hudText">Si se pierde o la roban, cualquiera puede leer la información de tus clientes.</p>
-          <div class="hud-meta"><span class="pill high" id="hudSev">Alta</span><span class="pill" id="hudCis">CIS v8 · 3.6</span><span class="pill fix" id="hudFix">Fix: activar BitLocker</span></div>
-        </div>
-        <div class="pager" id="pager" role="group" aria-label="Elegir equipo"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= CONTADORES ================= -->
-<div class="counts" aria-label="Controles que revisa el sistema de auditoría">
-  <div class="wrap">
-    <div class="count"><b data-count="21">21</b><span>Controles en Windows</span></div>
-    <div class="count"><b data-count="18">18</b><span>Controles en routers y firewalls</span></div>
-    <div class="count"><b data-count="12">12</b><span>Controles en Linux</span></div>
-    <div class="count"><b data-count="8">8</b><span>Controles en Microsoft 365 y Google</span></div>
-    <div class="count"><b data-count="59">59<small>+</small></b><span>Puntos revisados en total</span></div>
-  </div>
+  <!-- 3 · Resultado -->
+  <section id="result" hidden aria-live="polite"></section>
 </div>
 
-<!-- ================= CADENA DE ATAQUE ================= -->
-<section class="pad" id="ataque">
-  <div class="wrap">
-    <div class="chain-head">
-      <div>
-        <div class="tag"><b>01</b> / Anatomía de un ataque</div>
-        <h2 class="h2 rv" data-decrypt>Así se para <span class="lime">una pyme.</span></h2>
-        <p class="lead">Un ataque típico no es una película de hackers: es una cadena de descuidos chicos. Activá la auditoría y mirá dónde se corta.</p>
-      </div>
-      <button class="switch" id="sw" role="switch" aria-checked="false"><span class="lbl-off">Sin auditoría</span><span class="t" aria-hidden="true"></span><span class="lbl-on">Con SIR</span></button>
-    </div>
-    <div class="chain" id="chain">
-      <div class="c-node"><div class="n">PASO 01</div><h3>Un mail trampa</h3><p>Alguien abre un adjunto o escribe su clave en una página falsa.</p><span class="st">Comprometido</span></div>
-      <div class="c-node"><div class="n">PASO 02</div><h3>Clave robada</h3><p>Sin doble factor, con esa clave entran al mail y a la nube.</p><span class="st">Comprometido</span></div>
-      <div class="c-node"><div class="n">PASO 03</div><h3>Entran a la red</h3><p>Por un AnyDesk siempre abierto o un puerto expuesto del router.</p><span class="st">Comprometido</span></div>
-      <div class="c-node"><div class="n">PASO 04</div><h3>Ransomware</h3><p>Cifran todas las PCs y el servidor. Piden rescate.</p><span class="st">Comprometido</span></div>
-      <div class="c-node"><div class="n">PASO 05</div><h3>Sin backup</h3><p>La copia estaba conectada: también se cifró. La empresa se para.</p><span class="st">Comprometido</span></div>
-      <div class="barrier" data-b="0"><i>✓</i><span>Doble factor</span></div>
-      <div class="barrier" data-b="1"><i>✓</i><span>Acceso remoto controlado</span></div>
-      <div class="barrier" data-b="2"><i>✓</i><span>Sin admin + parches</span></div>
-      <div class="barrier" data-b="3"><i>✓</i><span>Backup desconectado</span></div>
-      <div class="packet" id="packet" aria-hidden="true"></div>
-    </div>
-    <p class="chain-out" id="chainOut" aria-live="polite">› Sin controles, el ataque recorre los 5 pasos.</p>
-  </div>
-</section>
+<script>
+  // Reemplazar por el número real de WhatsApp (formato internacional, sin + ni espacios)
+  const WHATSAPP = '5493413490705';
+  const WHATSAPP_VISIBLE = '+54 9 341 349-0705';
 
-<!-- ================= MAPA DE RED ================= -->
-<section class="pad" id="red" style="padding-top:0">
-  <div class="wrap">
-    <div class="tag"><b>02</b> / Qué revisamos</div>
-    <h2 class="h2 rv" data-decrypt>Tu oficina, <span class="lime">nodo por nodo.</span></h2>
-    <p class="lead">Tocá cada parte de la red para ver qué controlamos. Todo en modo lectura: miramos la configuración, no la cambiamos.</p>
-    <div class="map-grid">
-      <div class="map">
-        <span class="map-note">Red de ejemplo · pyme típica</span>
-        <svg viewBox="0 0 900 540" id="netmap" role="img" aria-label="Mapa de red de una pyme con sus componentes">
-          <g id="links"></g>
-          <g id="nodes"></g>
-        </svg>
-      </div>
-      <div class="panel" id="panel" aria-live="polite">
-        <span class="tag" id="pTag">Nodo · FW</span>
-        <h3 id="pTitle">Router y firewall</h3>
-        <ul id="pList"></ul>
-        <div class="chips" id="chips" aria-label="Elegir nodo"></div>
-        <div class="foot" id="pFoot">MikroTik · FortiGate · análisis de la configuración exportada</div>
-      </div>
-    </div>
-  </div>
-</section>
+  const Q = [
+    { tema:'Copias de seguridad', crit:true, cis:'11',
+      q:'¿Tienen copia de la información importante (facturación, clientes, archivos)?',
+      o:{ A:'Sí, automática, guardada fuera de la oficina o desconectada, y alguna vez probamos recuperarla',
+          B:'Sí, pero manual, en un disco que queda enchufado, o nunca la probamos',
+          C:'No, o no estoy seguro de que exista' },
+      h:'Backup débil o inexistente',
+      why:'Un ransomware o un disco roto y se pierde la facturación de años. Si el backup queda enchufado, se cifra junto con todo.',
+      fix:'Copia automática a la nube más una copia desconectada. Probá recuperar un archivo una vez por mes.' },
+    { tema:'Correo', crit:true, cis:'6.3',
+      q:'¿Las cuentas de mail de la empresa (Gmail, Outlook) piden un código al celular para entrar?',
+      o:{ A:'Sí, todas', B:'Algunas', C:'No' },
+      h:'Mail sin verificación en dos pasos',
+      why:'Con una contraseña filtrada pueden leer tu mail, pedirle pagos a tus clientes en tu nombre o cambiar un CBU.',
+      fix:'Activá la verificación en dos pasos en todas las cuentas. Lleva unos 15 minutos.' },
+    { tema:'Usuarios y contraseñas', cis:'5.2',
+      q:'¿Cada persona tiene su propio usuario y contraseña?',
+      o:{ A:'Sí, cada uno el suyo', B:'Algunos se comparten (la PC de mostrador, el mail de ventas)', C:'Usamos una misma contraseña para casi todo' },
+      h:'Usuarios o contraseñas compartidas',
+      why:'Si pasa algo no se sabe quién fue, y una sola contraseña filtrada abre todo.',
+      fix:'Un usuario por persona. Para las cuentas que sí o sí se comparten, un gestor de contraseñas.' },
+    { tema:'Instalar programas', cis:'5.4',
+      q:'¿Cualquier empleado puede instalar programas en su computadora?',
+      o:{ A:'No, solo el técnico o el responsable', B:'Algunos sí', C:'Sí, todos' },
+      h:'Todos pueden instalar programas',
+      why:'Un programa "gratis" o un adjunto infecta la PC con permisos totales.',
+      fix:'Usuario estándar para el trabajo diario. Permisos de administrador solo para el responsable.' },
+    { tema:'Actualizaciones', cis:'7.3',
+      q:'¿Las computadoras están actualizadas?',
+      o:{ A:'Sí, Windows 10/11 y se actualizan solas', B:'La mayoría; algunas las posponemos o no sé si se actualizan', C:'Hay alguna con Windows 7 u 8, o las actualizaciones están desactivadas' },
+      h:'Equipos desactualizados',
+      why:'Las fallas conocidas están publicadas y cualquiera puede aprovecharlas.',
+      fix:'Activá las actualizaciones automáticas y planificá el reemplazo de equipos sin soporte.' },
+    { tema:'Antivirus', cis:'10.1',
+      q:'¿Todas las computadoras tienen antivirus activo?',
+      o:{ A:'Sí, todas, y alguien lo controla', B:'Creo que sí, o solo algunas', C:'No' },
+      h:'Antivirus sin control',
+      why:'Sin protección o con la licencia vencida, nadie se entera de una infección.',
+      fix:'Microsoft Defender activo en todas las PCs y una revisión del estado una vez por semana.' },
+    { tema:'Wi-Fi', cis:'12',
+      q:'¿Los clientes o visitas se conectan a la misma Wi-Fi que las computadoras de trabajo?',
+      o:{ A:'No, hay una Wi-Fi aparte para invitados', B:'Sí, pero cambiamos la contraseña de fábrica del router', C:'Sí, y el router tiene la configuración de fábrica' },
+      h:'Wi-Fi compartida con visitas',
+      why:'Un celular infectado de una visita queda en la misma red que la facturación.',
+      fix:'Armá una red de invitados separada y cambiá la clave de administración del router.' },
+    { tema:'Cuando alguien se va', cis:'5.3',
+      q:'Cuando un empleado deja la empresa, ¿se le cortan los accesos (mail, sistemas, Wi-Fi)?',
+      o:{ A:'Sí, el mismo día', B:'A veces, o tarda', C:'No hay un procedimiento' },
+      h:'Bajas de personal sin procedimiento',
+      why:'Un ex empleado puede seguir entrando al mail o al sistema meses después.',
+      fix:'Una lista de baja (mail, sistemas, Wi-Fi, accesos remotos) que se completa el mismo día.' },
+    { tema:'Notebooks y celulares', cis:'3.6',
+      q:'Si se pierde o roban una notebook o celular de trabajo, ¿la información está protegida?',
+      o:{ A:'Sí, tienen contraseña y el disco está cifrado', B:'Tienen contraseña, pero no sé si están cifrados', C:'No, o algunos no tienen ni contraseña' },
+      h:'Equipos portátiles sin cifrar',
+      why:'Una notebook robada deja expuestos los datos de tus clientes, con consecuencias bajo la Ley 25.326.',
+      fix:'Activá BitLocker (Windows) o FileVault (Mac) y PIN en los celulares.' },
+    { tema:'Acceso remoto', cis:'6.4',
+      q:'¿Alguien externo (técnico, proveedor del sistema) se conecta a distancia (AnyDesk, TeamViewer, etc.)?',
+      o:{ A:'No, o solo cuando nosotros lo habilitamos en el momento', B:'Sí, y no sé bien cuándo ni cómo se conecta', C:'Sí, tiene acceso permanente con contraseña fija' },
+      h:'Acceso remoto sin control',
+      why:'Un acceso permanente con clave fija es una de las puertas más usadas en ataques a pymes.',
+      fix:'Acceso solo a pedido, con clave que cambia y verificación en dos pasos. Registrá quién entra.' },
+  ];
+  const PRIORIDAD = [0, 1, 8, 9, 7, 4, 2, 5, 3, 6];   // orden de desempate (preguntas 1,2,9,10,8,5,3,6,4,7)
+  const PUNTOS = { A:0, B:1, '?':1, C:2 };
 
-<!-- ================= CONSOLA + INDICADOR ================= -->
-<section class="pad" id="informe" style="padding-top:0">
-  <div class="wrap">
-    <div class="tag"><b>03</b> / Del escaneo al informe</div>
-    <h2 class="h2 rv" data-decrypt>Datos técnicos adentro. <span class="lime">Un semáforo afuera.</span></h2>
-    <p class="lead">El relevamiento es automático, la evidencia queda sellada y los nombres de tu gente se reemplazan por códigos. Vos recibís un resumen que se entiende en 2 minutos.</p>
-    <div class="ops" id="ops">
-      <div class="term">
-        <div class="term-top"><i></i><i></i><i></i><span>sir@auditoria · cliente-014</span></div>
-        <pre id="termOut"></pre>
-      </div>
-      <div class="gauge">
-        <span class="example">EJEMPLO DE INFORME</span>
-        <svg viewBox="0 0 400 250" aria-label="Indicador de riesgo en amarillo, 11 sobre 24">
-          <path d="M40 200 A160 160 0 0 1 100.6 74.6" stroke="#34D399" stroke-width="22" fill="none"/>
-          <path d="M104 72 A160 160 0 0 1 296 72" stroke="#FFB72B" stroke-width="22" fill="none"/>
-          <path d="M299.4 74.6 A160 160 0 0 1 360 200" stroke="#FF4D42" stroke-width="22" fill="none"/>
-          <g class="needle"><path d="M196 200 L200 62 L204 200 Z" fill="#F4F2EE"/></g>
-          <circle cx="200" cy="200" r="14" fill="#0B0B0C" stroke="#F4F2EE" stroke-width="3"/>
-          <text x="200" y="244" class="g-val">AMARILLO</text>
-        </svg>
-        <div class="sev">
-          <div class="r"><b data-count="2">2</b><span>Críticos</span></div>
-          <div class="a"><b data-count="4">4</b><span>Altos</span></div>
-          <div class="g"><b data-count="15">15</b><span>En orden</span></div>
+  let state = { step:'intro', ans:{}, info:{} };
+  const $ = id => document.getElementById(id);
+
+  // --- Cálculo (función pura) -------------------------------------------
+  function evaluar(ans) {
+    let score = 0, unsure = 0;
+    Q.forEach((q, i) => {
+      const a = ans[i]; if (!a) return;
+      score += PUNTOS[a] * (q.crit ? 2 : 1);
+      if (a === '?') unsure++;
+    });
+    let lvl = score <= 5 ? 0 : score <= 12 ? 1 : 2;           // 0 verde, 1 amarillo, 2 rojo
+    if (ans[0] === 'C' || ans[1] === 'C') lvl = Math.max(lvl, 1);
+    if (ans[0] === 'C' && ans[1] === 'C') lvl = 2;
+    if (unsure >= 4) lvl = Math.max(lvl, 1);
+    const sev = { C:3, '?':2, B:1, A:0 };
+    const top = PRIORIDAD.filter(i => sev[ans[i]] > 0)
+      .sort((x, y) => sev[ans[y]] - sev[ans[x]] || PRIORIDAD.indexOf(x) - PRIORIDAD.indexOf(y))
+      .slice(0, 3);
+    return { score, max:24, lvl, unsure, top };
+  }
+
+  // --- Vistas ------------------------------------------------------------
+  function show(step) {
+    state.step = step;
+    $('intro').hidden = step !== 'intro';
+    $('quiz').hidden = typeof step !== 'number';
+    $('result').hidden = step !== 'result';
+    if (typeof step === 'number') renderQ(step);
+    if (step === 'result') renderResult();
+    window.scrollTo(0, 0);
+  }
+
+  function renderQ(i) {
+    const q = Q[i];
+    $('progress').innerHTML = Q.map((_, j) => `<i class="${j < i ? 'done' : j === i ? 'now' : ''}"></i>`).join('');
+    $('count').textContent = `${String(i + 1).padStart(2, '0')} / 10`;
+    $('back').style.visibility = 'visible';
+    const opts = [...Object.entries(q.o), ['?', 'No sé']];
+    $('qForm').innerHTML = `
+      <fieldset>
+        <legend><span class="eyebrow qtema"><b>${String(i + 1).padStart(2, '0')}</b> / ${q.tema}</span><h2>${q.q}</h2></legend>
+        <div class="opts">${opts.map(([k, t]) => `
+          <label class="opt${k === '?' ? ' unsure' : ''}" for="q${i}-${k === '?' ? 'u' : k}">
+            <input type="radio" name="q" id="q${i}-${k === '?' ? 'u' : k}" value="${k}" ${state.ans[i] === k ? 'checked' : ''}>
+            <span class="k">${k}</span><span class="t">${t}</span>
+          </label>`).join('')}
+        </div>
+      </fieldset>`;
+  }
+
+  function renderResult() {
+    const r = evaluar(state.ans);
+    const L = [
+      { name:'Verde', cls:'g', txt:'Tienen buenas bases. Lo que sigue es confirmar que lo que declaraste es así en todos los equipos.' },
+      { name:'Amarillo', cls:'a', txt:'Nada para alarmarse, pero hay puntos concretos que conviene resolver pronto. La mayoría tiene solución simple.' },
+      { name:'Rojo', cls:'r', txt:'Hay riesgos que hoy podrían frenar la empresa si pasa algo. La buena noticia: se resuelven rápido una vez que sabés dónde están.' },
+    ][r.lvl];
+    const sevTag = a => a === 'C' ? '<span class="tag sev-C">Urgente</span>' : a === '?' ? '<span class="tag sev-u">No sabés</span>' : '<span class="tag sev-B">A mejorar</span>';
+    const prios = r.top.map(i => {
+      const q = Q[i], a = state.ans[i];
+      return `<li class="prio"><div>
+        <h3>${q.h}</h3>
+        <p>${a === '?' ? 'No sabés cómo está esto, y eso también es un riesgo. ' : ''}${q.why}</p>
+        <p class="fix"><b>Qué hacer:</b> ${q.fix}</p>
+        <div class="tags">${sevTag(a)}<span class="tag">CIS v8 · ${q.cis}</span></div>
+      </div></li>`;
+    }).join('');
+    $('result').innerHTML = `
+      <span class="eyebrow"><b>Resultado</b> / ${esc(state.info.empresa || 'Tu empresa')}</span>
+      <div class="verdict">
+        <div class="lights" role="img" aria-label="Semáforo en ${L.name.toLowerCase()}">
+          <i class="r ${r.lvl === 2 ? 'on' : ''}"></i><i class="a ${r.lvl === 1 ? 'on' : ''}"></i><i class="g ${r.lvl === 0 ? 'on' : ''}"></i>
+        </div>
+        <div>
+          <h1 class="lvl-${L.cls}">${L.name}</h1>
+          <div class="score">PUNTAJE DE RIESGO ${r.score} / ${r.max}${r.unsure ? ` · ${r.unsure} "NO SÉ"` : ''}</div>
+          <p class="reading">${L.txt}</p>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= PROTOCOLO ================= -->
-<section class="pad" id="protocolo" style="padding-top:0">
-  <div class="wrap">
-    <div class="tag"><b>04</b> / Protocolo</div>
-    <h2 class="h2 rv" data-decrypt>Tres pasos. <span class="lime">Cero sorpresas.</span></h2>
-    <div class="proto">
-      <div class="p-step"><div class="big">01</div><h3>Firmamos</h3><p>Autorización y confidencialidad por escrito, con el alcance definido, antes de tocar nada.</p><span class="tag">Marco legal argentino</span></div>
-      <div class="p-step"><div class="big">02</div><h3>Relevamos</h3><p>Medio día en tu empresa. Leemos configuraciones: no se instala, no se cambia y no se borra nada.</p><span class="tag">Equipos · red · nube</span></div>
-      <div class="p-step"><div class="big">03</div><h3>Te entregamos</h3><p>Informe en 72 hs y una reunión para explicarlo, con el plan de qué resolver primero.</p><span class="tag">Resumen + anexo técnico</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= PLANES ================= -->
-<section class="pad" id="planes" style="padding-top:0">
-  <div class="wrap">
-    <div class="tag"><b>05</b> / Planes</div>
-    <h2 class="h2 rv" data-decrypt>Elegí tu <span class="lime">nivel de acceso.</span></h2>
-    <div class="plans">
-      <article class="plan tilt">
-        <span class="lvl">Nivel 1</span>
-        <h3>Chequeo Express</h3>
-        <p class="for">Para 1 a 3 computadoras</p>
-        <ul><li>Revisión de los equipos</li><li>Informe con semáforo y prioridades</li><li>Ideal para arrancar</li></ul>
-        <a class="btn btn-line" href="https://wa.me/5493413490705?text=Hola%20SIR!%20Quiero%20consultar%20por%20el%20Chequeo%20Express." target="_blank" rel="noopener">Consultar</a>
-      </article>
-      <article class="plan best tilt">
-        <span class="badge">Más elegido</span>
-        <span class="lvl">Nivel 2</span>
-        <h3>Auditoría Pyme</h3>
-        <p class="for">Para una oficina típica</p>
-        <ul><li>Hasta 10 equipos</li><li>Router o firewall</li><li>Microsoft 365 o Google Workspace</li><li>Reunión de presentación del informe</li></ul>
-        <a class="btn btn-lime" href="https://wa.me/5493413490705?text=Hola%20SIR!%20Quiero%20consultar%20por%20la%20Auditor%C3%ADa%20Pyme." target="_blank" rel="noopener">Consultar <span class="arr" aria-hidden="true">→</span></a>
-      </article>
-      <article class="plan tilt">
-        <span class="lvl">Nivel 3</span>
-        <h3>Auditoría Integral</h3>
-        <p class="for">Con servidores o más equipos</p>
-        <ul><li>Todo lo del plan Pyme</li><li>Servidores Linux</li><li>Plan de acción a 30, 60 y 90 días</li></ul>
-        <a class="btn btn-line" href="https://wa.me/5493413490705?text=Hola%20SIR!%20Quiero%20consultar%20por%20la%20Auditor%C3%ADa%20Integral." target="_blank" rel="noopener">Consultar</a>
-      </article>
-    </div>
-    <p class="note">Cada auditoría se cotiza según la cantidad de equipos y servicios. Escribinos y te pasamos una propuesta.</p>
-  </div>
-</section>
-
-<!-- ================= CHEQUEO ================= -->
-<section class="pad" style="padding-top:0">
-  <div class="wrap">
-    <div class="unlock" id="unlock">
-      <div class="bigtext" aria-hidden="true">SIR</div>
-      <div>
-        <div class="tag"><b>Gratis</b> / 5 minutos</div>
-        <h2>¿No sabés por dónde empezar?</h2>
-        <p>Respondé 10 preguntas simples y en el momento ves tu semáforo con los 3 riesgos más importantes y cómo resolverlos.</p>
-        <a class="btn btn-ink" href="chequeo/">Hacer el chequeo gratis <span class="arr" aria-hidden="true">→</span></a>
+      ${r.top.length ? `<h2>Tus ${r.top.length === 1 ? 'prioridad' : r.top.length + ' prioridades'}</h2><ol class="prios">${prios}</ol>`
+                     : `<p class="lead">No marcaste ningún punto débil. Excelente punto de partida.</p>`}
+      <div class="cta">
+        <h2>¿Querés ver el estado real de cada equipo?</h2>
+        <p>Esto es lo que vos nos contaste. La Auditoría Pyme lo verifica en el lugar: medio día en tu empresa, solo lectura, sin frenar nada, e informe en 72 hs con un plan priorizado.</p>
+        <div class="row">
+          <a class="btn btn-ink" id="wa" href="${waLink(r)}" target="_blank" rel="noopener">Enviar resultado por WhatsApp <span aria-hidden="true">→</span></a>
+          <button class="btn btn-ghost" type="button" id="copy">Copiar resultado</button>
+          <span class="copied" id="copied" role="status"></span>
+        </div>
+        <div class="num">WhatsApp: ${WHATSAPP_VISIBLE} · o por DM en Instagram</div>
       </div>
-      <svg class="lock" viewBox="0 0 120 150" aria-hidden="true">
-        <path class="shackle" d="M30 64 V40 a30 30 0 0 1 60 0 V64" fill="none" stroke="#0B0B0C" stroke-width="12" stroke-linecap="square"/>
-        <rect x="10" y="60" width="100" height="86" fill="#0B0B0C"/>
-        <circle cx="60" cy="94" r="11" fill="#C6FF3D"/><path d="M55 96 h10 l3 30 h-16z" fill="#C6FF3D"/>
-      </svg>
-    </div>
-  </div>
-</section>
+      <p class="note disclaimer">Este chequeo es una autoevaluación orientativa basada en tus respuestas. No reemplaza una auditoría ni garantiza la seguridad de tus sistemas.</p>
+      <button class="btn btn-ghost" type="button" id="restart">↺ Hacer el chequeo de nuevo</button>`;
+  }
 
-<!-- ================= FAQ ================= -->
-<section class="pad" id="faq" style="padding-top:0">
-  <div class="wrap">
-    <div class="tag"><b>06</b> / Preguntas</div>
-    <h2 class="h2 rv" data-decrypt>Sin letra chica.</h2>
-    <div class="faq">
-      <details open><summary><span class="q">Q.01</span>¿Puede dejar de funcionar algo mientras auditan?</summary>
-        <p>No. Todo el relevamiento es de solo lectura: miramos la configuración, no instalamos ni modificamos nada y no hacemos pruebas que puedan afectar el funcionamiento. Tu empresa sigue trabajando normal.</p></details>
-      <details><summary><span class="q">Q.02</span>¿Qué pasa con mis datos?</summary>
-        <p>Antes de cualquier análisis, los nombres de equipos, usuarios y direcciones se reemplazan por códigos. Firmamos un acuerdo de confidencialidad y, al cerrar el trabajo, la información se destruye de forma segura.</p></details>
-      <details><summary><span class="q">Q.03</span>¿Usan inteligencia artificial?</summary>
-        <p>Sí, para acelerar el análisis y la redacción del informe. Siempre con los datos ya reemplazados por códigos, y cada hallazgo lo revisa una persona antes de llegar a vos. Lo dejamos por escrito en el acuerdo.</p></details>
-      <details><summary><span class="q">Q.04</span>Ya tengo antivirus y un técnico. ¿Me sirve igual?</summary>
-        <p>Sí. El antivirus es una sola capa, y la auditoría no reemplaza a tu técnico: le da una mirada externa y una lista priorizada para trabajar.</p></details>
-      <details><summary><span class="q">Q.05</span>¿Me garantizan que no me van a hackear?</summary>
-        <p>Nadie serio puede garantizar eso. Lo que te damos es visibilidad: saber en qué estado real está tu empresa y qué conviene resolver primero para bajar el riesgo.</p></details>
-      <details><summary><span class="q">Q.06</span>¿Cuánto tarda?</summary>
-        <p>En una pyme típica, medio día en tu empresa y el informe dentro de las 72 horas.</p></details>
-    </div>
-  </div>
-</section>
+  function resumen(r) {
+    const L = ['VERDE', 'AMARILLO', 'ROJO'][r.lvl];
+    const resp = Q.map((_, i) => `${i + 1}${state.ans[i]}`).join(' ');
+    const i = state.info;
+    return `Hola SIR! Hice el chequeo inicial.\n` +
+      `Empresa: ${i.empresa || '-'} (${i.rubro || 'rubro sin indicar'}, ${i.pcs} PCs)\n` +
+      `Resultado: ${L} (${r.score}/24)\n` +
+      `Respuestas: ${resp}\n` +
+      `Me interesa saber más sobre la auditoría.`;
+  }
+  const waLink = r => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(resumen(r))}`;
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
 
-<!-- ================= CIERRE ================= -->
-<section class="pad" style="padding-top:0">
-  <div class="wrap final">
-    <div class="tag"><b>›</b> Fin de la transmisión</div>
-    <h2 style="margin-top:22px" data-decrypt class="rv">Sabé cómo está <span class="lime">tu empresa.</span></h2>
-    <div class="cta-row">
-      <a class="btn btn-lime" href="chequeo/">Hacé el chequeo gratis <span class="arr" aria-hidden="true">→</span></a>
-      <a class="btn btn-line" href="https://wa.me/5493413490705?text=Hola%20SIR!%20Quiero%20consultar%20por%20una%20auditor%C3%ADa." target="_blank" rel="noopener">Hablar por WhatsApp</a>
-    </div>
-    <div class="wa">WhatsApp +54 9 341 349-0705</div>
-  </div>
-</section>
-</main>
-
-<footer>
-  <div class="mega" aria-hidden="true">S<svg><use href="#kh"/></svg>R</div>
-  <div class="wrap foot">
-    <p>Seguridad Informática Rosario · Auditorías de ciberseguridad para pymes del Gran Rosario. El informe refleja el estado de los sistemas al momento del relevamiento y no reemplaza el monitoreo continuo.</p>
-    <span>Gran Rosario, Argentina</span>
-  </div>
-</footer>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script>
-(function(){
-'use strict';
-var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-var finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
-var $ = function(s, r){ return (r||document).querySelector(s); };
-var $$ = function(s, r){ return [].slice.call((r||document).querySelectorAll(s)); };
-
-/* ---------------- Arranque (una vez por sesión) ---------------- */
-(function boot(){
-  var el = $('#boot'), seen = false;
-  try { seen = sessionStorage.getItem('sir-boot') === '1'; sessionStorage.setItem('sir-boot', '1'); } catch(e) {}
-  if (reduce || seen) { el.remove(); return; }
-  var lines = [
-    ['sir@auditoria:~$ ./iniciar --modo solo-lectura', ''],
-    ['[ok] autorización firmada', 'ok'],
-    ['[ok] seudonimización activa', 'ok'],
-    ['[ok] cargando módulos: windows · red · linux · nube', 'ok'],
-    ['> listo.', 'ok']
-  ];
-  var log = $('#bootlog');
-  lines.forEach(function(l, i){
-    var d = document.createElement('div'); d.className = 'l ' + l[1]; d.textContent = l[0];
-    d.style.animationDelay = (i * 180) + 'ms'; log.appendChild(d);
+  // --- Eventos -------------------------------------------------------------
+  $('introForm').addEventListener('submit', e => {
+    e.preventDefault();
+    state.info = { empresa:$('empresa').value.trim(), rubro:$('rubro').value.trim(), pcs:$('pcs').value };
+    show(0);
   });
-  setTimeout(function(){ el.classList.add('out'); }, 1150);
-  setTimeout(function(){ el.remove(); }, 1900);
-})();
-
-/* ---------------- Texto que se "descifra" ---------------- */
-var GLYPHS = "ABCDEFGHKLMNPRSTUVXYZ0123456789#%&$";
-function resetDec(el){ if (el._dec) cancelAnimationFrame(el._dec); el._nodes = null; }
-function textNodes(el){ var w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), n, out = []; while ((n = w.nextNode())) if (n.nodeValue.trim()) out.push(n); return out; }
-function decrypt(el, dur){
-  if (reduce || !el) return;
-  dur = dur || 900;
-  if (el._dec) cancelAnimationFrame(el._dec);
-  if (!el._nodes) { el._nodes = textNodes(el); el._finals = el._nodes.map(function(n){ return n.nodeValue; }); }
-  var nodes = el._nodes, finals = el._finals, t0 = performance.now();
-  (function f(t){
-    var p = Math.min(1, (t - t0) / dur);
-    nodes.forEach(function(n, k){
-      var s = finals[k], rev = Math.floor(p * s.length), o = s.slice(0, rev);
-      for (var i = rev; i < s.length; i++) o += (s[i] === ' ' || i > rev + 3) ? s[i] : GLYPHS[(Math.random() * GLYPHS.length) | 0];
-      n.nodeValue = o;
-    });
-    if (p < 1) el._dec = requestAnimationFrame(f); else nodes.forEach(function(n, k){ n.nodeValue = finals[k]; });
-  })(t0);
-}
-
-/* ---------------- Barra de progreso + retícula ---------------- */
-var prog = $('#progress');
-addEventListener('scroll', function(){
-  var h = document.documentElement.scrollHeight - innerHeight;
-  prog.style.transform = 'scaleX(' + (h > 0 ? scrollY / h : 0) + ')';
-}, { passive: true });
-
-if (finePointer && !reduce) {
-  var ret = $('.reticle'), rx = -100, ry = -100, tx = -100, ty = -100;
-  addEventListener('pointermove', function(e){ tx = e.clientX; ty = e.clientY; ret.style.opacity = 1; });
-  document.addEventListener('pointerleave', function(){ ret.style.opacity = 0; });
-  document.addEventListener('pointerover', function(e){ ret.classList.toggle('big', !!e.target.closest('a,button,summary,.nd')); });
-  (function loop(){ rx += (tx - rx) * .22; ry += (ty - ry) * .22; ret.style.transform = 'translate(' + rx + 'px,' + ry + 'px)'; requestAnimationFrame(loop); })();
-}
-
-/* ---------------- Revelado + contadores + descifrado al entrar ---------------- */
-function countUp(el){
-  var target = +el.dataset.count, small = el.querySelector('small'), t0 = performance.now(), d = 1400;
-  if (reduce) return;
-  (function f(t){ var p = Math.min(1, (t - t0) / d), e = 1 - Math.pow(1 - p, 3);
-    el.firstChild.nodeValue = String(Math.round(target * e)); if (p < 1) requestAnimationFrame(f); })(t0);
-  void small;
-}
-if ('IntersectionObserver' in window) {
-  var io = new IntersectionObserver(function(es){
-    es.forEach(function(e){
-      if (!e.isIntersecting) return;
-      var el = e.target; io.unobserve(el);
-      el.classList.add('in');
-      if (el.hasAttribute('data-decrypt')) decrypt(el, 1000);
-      if (el.dataset.count) countUp(el);
-    });
-  }, { threshold: .25 });
-  $$('.rv,[data-decrypt],[data-count]').forEach(function(el){ if (!el.closest('.hud,.hero')) io.observe(el); });
-} else { $$('.rv').forEach(function(el){ el.classList.add('in'); }); }
-
-/* =====================================================================
-   HERO 3D: carrusel de equipos con su vulnerabilidad
-   ===================================================================== */
-var VULNS = [
-  { dev:'Notebook de administración', kind:'laptop', title:'Disco sin cifrar', sev:'high', sevTxt:'Alta', cis:'3.6', fix:'Activar BitLocker',
-    text:'Si se pierde o la roban, cualquiera puede leer la información de tus clientes.',
-    term:['> scan NB-0003', 'BitLocker C:  OFF', 'datos clientes: 14 GB', 'robo = fuga de datos', 'riesgo: ALTO'] },
-  { dev:'PC de mostrador', kind:'desktop', title:'Usuario administrador compartido', sev:'high', sevTxt:'Alta', cis:'5.4', fix:'Usuario estándar por persona',
-    text:'Todos usan la misma cuenta con permisos totales: un adjunto infectado controla la PC entera.',
-    term:['> scan PC-0012', 'usuario: "caja"', 'grupo: Administradores', 'clave compartida: sí', 'riesgo: ALTO'] },
-  { dev:'Servidor de archivos', kind:'server', title:'Backup conectado a la red', sev:'crit', sevTxt:'Crítica', cis:'11', fix:'Copia desconectada y probada',
-    text:'Un ransomware cifra los archivos y también la copia. No queda nada para recuperar.',
-    term:['> scan SRV-01', 'backup: \\\\NAS\\copias', 'montado: siempre', 'última prueba: nunca', 'riesgo: CRÍTICO'] },
-  { dev:'Router de la oficina', kind:'router', title:'Administración expuesta a internet', sev:'crit', sevTxt:'Crítica', cis:'4.7', fix:'Cerrar acceso externo y cambiar clave',
-    text:'El panel del router responde desde internet y tiene la clave de fábrica.',
-    term:['> scan FW-01', 'winbox: 0.0.0.0/0', 'admin: clave fábrica', 'firmware: 2019', 'riesgo: CRÍTICO'] },
-  { dev:'Celular del dueño', kind:'phone', title:'Mail sin doble factor', sev:'high', sevTxt:'Alta', cis:'6.3', fix:'Activar verificación en dos pasos',
-    text:'Con una clave filtrada pueden leer tu mail y pedirle pagos a tus clientes en tu nombre.',
-    term:['> scan USR-0001', 'cuenta: M365', 'MFA: no registrado', 'reenvío externo: 1', 'riesgo: ALTO'] }
-];
-
-var hud = { scan:$('#hudScan'), dev:$('#hudDev'), title:$('#hudTitle'), text:$('#hudText'), sev:$('#hudSev'), cis:$('#hudCis'), fix:$('#hudFix') };
-var pager = $('#pager'), active = 0, jumpTo = null;
-VULNS.forEach(function(v, i){
-  var b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', v.dev + ': ' + v.title);
-  b.addEventListener('click', function(){ if (jumpTo) jumpTo(i); else setHud(i); });
-  pager.appendChild(b);
-});
-function setHud(i){
-  var v = VULNS[i]; active = i;
-  resetDec(hud.title);
-  hud.scan.textContent = '■ Escaneando ' + String(i + 1).padStart(2, '0') + '/' + String(VULNS.length).padStart(2, '0');
-  hud.dev.textContent = v.dev; hud.title.textContent = v.title; hud.text.textContent = v.text;
-  hud.sev.textContent = v.sevTxt; hud.sev.className = 'pill ' + v.sev;
-  hud.cis.textContent = 'CIS v8 · ' + v.cis; hud.fix.textContent = 'Fix: ' + v.fix;
-  $$('button', pager).forEach(function(b, k){ b.setAttribute('aria-current', String(k === i)); });
-  decrypt(hud.title, 650);
-}
-setHud(0);
-
-function initThree(){
-  var canvas = $('#three'), stage = $('#stage');
-  var renderer;
-  try { renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true }); }
-  catch (e) { stage.classList.add('nogl'); canvas.remove(); return; }
-  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
-  renderer.outputEncoding = THREE.sRGBEncoding;
-
-  var scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(0x0B0B0C, 9, 17);
-  var camera = new THREE.PerspectiveCamera(32, 1, .1, 60);
-  camera.position.set(0, 1.9, 10);
-  camera.lookAt(0, -1.35, 0);
-
-  scene.add(new THREE.AmbientLight(0xffffff, .35));
-  var key = new THREE.DirectionalLight(0xffffff, .9); key.position.set(4, 6, 6); scene.add(key);
-  var limeLight = new THREE.PointLight(0xC6FF3D, 2.2, 9); limeLight.position.set(0, 1.5, 5.5); scene.add(limeLight);
-  var redLight = new THREE.PointLight(0xFF4D42, 0, 6); redLight.position.set(0, 2.2, 4.2); scene.add(redLight);
-
-  var LIME = 0xC6FF3D;
-  var body = new THREE.MeshStandardMaterial({ color: 0x1a1a1f, metalness: .65, roughness: .32 });
-  var bodyDark = new THREE.MeshStandardMaterial({ color: 0x0f0f12, metalness: .5, roughness: .5 });
-  function edges(mesh, op){ var l = new THREE.LineSegments(new THREE.EdgesGeometry(mesh.geometry), new THREE.LineBasicMaterial({ color: LIME, transparent: true, opacity: op || .28 })); mesh.add(l); return mesh; }
-  function box(w, h, d, m){ return edges(new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m || body)); }
-
-  // Pantallas con textura dibujada en canvas
-  function makeScreen(w, h, pw, ph){
-    var c = document.createElement('canvas'); c.width = pw; c.height = ph;
-    var tex = new THREE.CanvasTexture(c); tex.encoding = THREE.sRGBEncoding; tex.anisotropy = 4;
-    var mesh = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ map: tex, toneMapped: false }));
-    return { mesh: mesh, c: c, g: c.getContext('2d'), tex: tex };
-  }
-
-  function buildLaptop(){
-    var g = new THREE.Group();
-    var base = box(2.0, .09, 1.35); base.position.y = .045; g.add(base);
-    var kb = new THREE.Mesh(new THREE.PlaneGeometry(1.7, .7), new THREE.MeshStandardMaterial({ color: 0x0b0b0d, roughness: .9 }));
-    kb.rotation.x = -Math.PI / 2; kb.position.set(0, .092, -.1); g.add(kb);
-    var hinge = new THREE.Group(); hinge.position.set(0, .09, -.66); g.add(hinge);
-    var lid = box(2.0, 1.3, .06); lid.position.set(0, .65, 0); hinge.add(lid);
-    var s = makeScreen(1.84, 1.14, 512, 320); s.mesh.position.set(0, .65, .032); hinge.add(s.mesh);
-    hinge.rotation.x = -.18;
-    return { g: g, s: s };
-  }
-  function buildDesktop(){
-    var g = new THREE.Group();
-    var foot = box(.9, .05, .55); foot.position.y = .025; g.add(foot);
-    var neck = box(.14, .55, .14); neck.position.y = .3; g.add(neck);
-    var mon = box(2.3, 1.42, .09); mon.position.y = 1.18; g.add(mon);
-    var s = makeScreen(2.14, 1.26, 512, 300); s.mesh.position.set(0, 1.18, .047); g.add(s.mesh);
-    var tower = box(.55, 1.25, 1.1, bodyDark); tower.position.set(1.65, .625, -.1); g.add(tower);
-    return { g: g, s: s };
-  }
-  function buildServer(){
-    var g = new THREE.Group();
-    var rack = box(1.25, 2.3, 1.1); rack.position.y = 1.15; g.add(rack);
-    var s = makeScreen(1.08, 2.1, 256, 500); s.mesh.position.set(0, 1.15, .552); g.add(s.mesh);
-    return { g: g, s: s, tall: true };
-  }
-  function buildRouter(){
-    var g = new THREE.Group();
-    var r = box(1.9, .36, 1.15); r.position.y = .18; g.add(r);
-    [-.65, 0, .65].forEach(function(x, i){
-      var a = edges(new THREE.Mesh(new THREE.CylinderGeometry(.04, .05, 1.15, 10), bodyDark), .35);
-      a.position.set(x, .85, -.45); a.rotation.z = (i - 1) * .22; g.add(a);
-    });
-    // Panel holográfico sobre el router
-    var s = makeScreen(2.0, 1.18, 512, 300); s.mesh.position.set(0, 1.75, .1);
-    s.mesh.material.transparent = true; s.mesh.material.opacity = .92; g.add(s.mesh);
-    var frame = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(2.04, 1.22)), new THREE.LineBasicMaterial({ color: LIME, transparent: true, opacity: .6 }));
-    frame.position.copy(s.mesh.position); g.add(frame);
-    return { g: g, s: s, holo: true };
-  }
-  function buildPhone(){
-    var g = new THREE.Group();
-    var p = box(.92, 1.85, .09); p.position.y = 1.0; g.add(p);
-    var s = makeScreen(.82, 1.72, 220, 460); s.mesh.position.set(0, 1.0, .047); g.add(s.mesh);
-    g.rotation.z = -.06;
-    return { g: g, s: s, tall: true };
-  }
-  var builders = { laptop: buildLaptop, desktop: buildDesktop, server: buildServer, router: buildRouter, phone: buildPhone };
-
-  var ring = new THREE.Group(); ring.position.y = -1.05; scene.add(ring);
-  var N = VULNS.length, R = 3.6, devices = [];
-  VULNS.forEach(function(v, i){
-    var d = builders[v.kind](), a = i / N * Math.PI * 2;
-    var holder = new THREE.Group();
-    holder.position.set(Math.sin(a) * R, 0, Math.cos(a) * R); holder.rotation.y = a;
-    holder.add(d.g); ring.add(holder);
-    d.holder = holder; d.v = v; devices.push(d);
+  $('qForm').addEventListener('change', e => {
+    if (e.target.name !== 'q') return;
+    const i = state.step;
+    state.ans[i] = e.target.value;
+    setTimeout(() => show(i < Q.length - 1 ? i + 1 : 'result'), 220);
+  });
+  $('back').addEventListener('click', () => show(state.step > 0 ? state.step - 1 : 'intro'));
+  $('result').addEventListener('click', e => {
+    if (e.target.closest('#restart')) { state.ans = {}; show('intro'); }
+    if (e.target.closest('#copy')) {
+      const txt = resumen(evaluar(state.ans));
+      const ok = () => { $('copied').textContent = 'Copiado'; };
+      try {
+        navigator.clipboard.writeText(txt).then(ok, () => { $('copied').textContent = 'Copiá el texto: ' + txt; });
+      } catch { $('copied').textContent = 'Copiá el texto: ' + txt; }
+    }
   });
 
-  // Piso: grilla polar + barrido de radar
-  var polar = new THREE.PolarGridHelper(6.2, 16, 6, 64, 0x2c3a12, 0x1a2209);
-  polar.position.y = -1.06; scene.add(polar);
-  var sweep = new THREE.Mesh(new THREE.CircleGeometry(6.2, 48, 0, .7), new THREE.MeshBasicMaterial({ color: LIME, transparent: true, opacity: .07, side: THREE.DoubleSide, depthWrite: false }));
-  sweep.rotation.x = -Math.PI / 2; sweep.position.y = -1.04; scene.add(sweep);
-
-  // Partículas de datos
-  var P = 420, pos = new Float32Array(P * 3), spd = new Float32Array(P);
-  for (var i = 0; i < P; i++) { pos[i*3] = (Math.random() - .5) * 16; pos[i*3+1] = Math.random() * 7 - 1.5; pos[i*3+2] = (Math.random() - .5) * 12 - 2; spd[i] = .004 + Math.random() * .012; }
-  var pg = new THREE.BufferGeometry(); pg.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-  var points = new THREE.Points(pg, new THREE.PointsMaterial({ color: LIME, size: .035, transparent: true, opacity: .55, depthWrite: false }));
-  scene.add(points);
-
-  // Haz de escaneo (plano horizontal que barre el equipo del frente)
-  var beam = new THREE.Mesh(new THREE.PlaneGeometry(2.8, .03), new THREE.MeshBasicMaterial({ color: LIME, transparent: true, opacity: .95, blending: THREE.AdditiveBlending, depthWrite: false }));
-  var beamGlow = new THREE.Mesh(new THREE.PlaneGeometry(2.8, .5), new THREE.MeshBasicMaterial({ color: LIME, transparent: true, opacity: .12, blending: THREE.AdditiveBlending, depthWrite: false }));
-  beam.add(beamGlow); scene.add(beam);
-
-  // Dibujo de pantallas
-  var COLS = { crit: '#FF4D42', high: '#FFB72B', lime: '#C6FF3D' };
-  function drawScreen(d, t, isFront, phase){
-    var g = d.s.g, W = d.s.c.width, H = d.s.c.height, v = d.v, sc = W / 512;
-    g.fillStyle = '#060607'; g.fillRect(0, 0, W, H);
-    // barra superior
-    g.fillStyle = isFront ? (phase < 2 ? COLS[v.sev] : COLS.lime) : '#26262a';
-    g.fillRect(0, 0, W, 34 * sc);
-    g.fillStyle = '#0B0B0C'; g.font = '700 ' + Math.round(17 * sc) + 'px "JetBrains Mono", monospace'; g.textBaseline = 'middle';
-    g.fillText(isFront ? (phase < 2 ? '⚠ VULNERABLE' : '✓ PRIORIZADO · CIS ' + v.cis) : 'SIR · EN ESPERA', 12 * sc, 17 * sc);
-    // líneas tipo consola
-    var fs = Math.round((d.tall ? 22 : 24) * sc), lh = fs * 1.55, y0 = 34 * sc + lh;
-    g.font = '500 ' + fs + 'px "JetBrains Mono", monospace'; g.textBaseline = 'alphabetic';
-    var lines = v.term, shown = isFront ? Math.min(lines.length, Math.floor(t / .32) + 1) : lines.length;
-    for (var k = 0; k < shown; k++) {
-      var ln = lines[k]; if (isFront && k === shown - 1 && phase === 0) ln = ln.slice(0, Math.floor((t % .32) / .32 * ln.length) + 1);
-      g.fillStyle = !isFront ? '#3a3a40' : (k === 0 ? COLS.lime : (k === lines.length - 1 ? COLS[v.sev] : '#D9D8D3'));
-      if (d.tall) { // texto en dos renglones si es angosto
-        g.fillText(ln.slice(0, 15), 14 * sc, y0 + k * lh * 1.0);
-      } else g.fillText(ln, 16 * sc, y0 + k * lh);
-    }
-    if (isFront && (t * 2 % 1) < .5) { g.fillStyle = COLS.lime; g.fillRect(16 * sc, y0 + shown * lh - fs, fs * .55, fs); }
-    // ruido de líneas
-    g.fillStyle = 'rgba(255,255,255,.03)'; for (var yy = 0; yy < H; yy += 4) g.fillRect(0, yy, W, 1);
-    if (isFront && phase === 0 && Math.random() < .08) { g.fillStyle = 'rgba(255,77,66,.25)'; g.fillRect(0, Math.random() * H, W, 6 * sc); }
-    d.s.tex.needsUpdate = true;
-  }
-
-  var current = 0, ringRot = 0, cycleStart = performance.now(), CYCLE = 4600;
-  devices.forEach(function(d){ drawScreen(d, 0, false, 0); });
-  jumpTo = function(i){ current = i; cycleStart = performance.now(); setHud(i); };
-
-  var mx = 0, my = 0, smx = 0, smy = 0;
-  stage.addEventListener('pointermove', function(e){ var b = stage.getBoundingClientRect(); mx = (e.clientX - b.left) / b.width - .5; my = (e.clientY - b.top) / b.height - .5; });
-  stage.addEventListener('pointerleave', function(){ mx = my = 0; });
-
-  function size(){
-    var b = canvas.getBoundingClientRect(), w = Math.max(1, b.width), h = Math.max(1, b.height);
-    renderer.setSize(w, h, false); camera.aspect = w / h;
-    camera.position.z = w < 600 ? 11 : 8.8;
-    camera.updateProjectionMatrix();
-  }
-  size(); addEventListener('resize', size);
-
-  var visible = true, raf = 0, lastT = performance.now();
-  function frame(now){
-    raf = 0;
-    var dt = Math.min(.05, (now - lastT) / 1000); lastT = now;
-    var el = now - cycleStart;
-    if (!reduce && el > CYCLE) { current = (current + 1) % N; cycleStart = now; el = 0; setHud(current); }
-    var t = el / 1000, phase = t < 1.9 ? 0 : (t < 3.0 ? 1 : 2);
-
-    // giro del anillo hacia el equipo actual (camino más corto)
-    var target = -current / N * Math.PI * 2, diff = target - ringRot;
-    diff = Math.atan2(Math.sin(diff), Math.cos(diff));
-    ringRot += diff * Math.min(1, dt * 3.2);
-    ring.rotation.y = ringRot;
-
-    smx += (mx - smx) * .06; smy += (my - smy) * .06;
-    scene.rotation.y = smx * .35; scene.rotation.x = smy * .12;
-
-    devices.forEach(function(d, i){
-      var front = i === current;
-      d.g.position.y = front ? Math.sin(now * .002) * .08 + .12 : 0;
-      d.g.rotation.y = front ? Math.sin(now * .0011) * .18 : 0;
-      if (front || d._wasFront) drawScreen(d, t, front, phase);
-      d._wasFront = front;
-    });
-
-    // haz de escaneo durante la fase 1
-    var fd = devices[current], top = fd.tall ? 2.4 : (fd.holo ? 2.4 : 1.6);
-    beam.visible = phase === 1 && !reduce;
-    if (beam.visible) {
-      var p = (t - 1.9) / 1.1;
-      var wp = new THREE.Vector3(); fd.holder.getWorldPosition(wp);
-      beam.position.set(wp.x, ring.position.y + top * (1 - p) + .05, wp.z + .75);
-      beam.rotation.y = 0;
-    }
-    redLight.intensity = phase === 0 ? 1.2 + Math.sin(now * .012) * .8 : 0;
-    limeLight.intensity = phase === 0 ? 1.0 : 2.6;
-
-    sweep.rotation.z = -now * .0009;
-    var arr = pg.attributes.position.array;
-    for (var i = 0; i < P; i++) { arr[i*3+1] += spd[i]; if (arr[i*3+1] > 5.5) arr[i*3+1] = -1.5; }
-    pg.attributes.position.needsUpdate = true;
-
-    renderer.render(scene, camera);
-    if (visible && !document.hidden && !reduce) raf = requestAnimationFrame(frame);
-  }
-  function start(){ if (!raf && visible && !document.hidden) raf = requestAnimationFrame(frame); }
-  if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ visible = es[0].isIntersecting; start(); }).observe(stage);
-  document.addEventListener('visibilitychange', start);
-  (document.fonts ? document.fonts.ready : Promise.resolve()).then(function(){ devices.forEach(function(d){ drawScreen(d, 0, false, 0); }); start(); });
-  if (reduce) { // una imagen fija con el primer equipo
-    requestAnimationFrame(function(n){ frame(n); });
-  }
-}
-if (window.THREE) initThree(); else $('#stage').classList.add('nogl');
-
-/* =====================================================================
-   CADENA DE ATAQUE: el paquete recorre los pasos; con SIR se frena
-   ===================================================================== */
-(function(){
-  var chain = $('#chain'), nodes = $$('.c-node', chain), bars = $$('.barrier', chain), pk = $('#packet'), sw = $('#sw'), out = $('#chainOut');
-  var protectedOn = false, pts = [], t0 = performance.now(), visible = false;
-  function measure(){
-    var cb = chain.getBoundingClientRect();
-    pts = nodes.map(function(n){ var b = n.getBoundingClientRect(); return { x: b.left - cb.left + b.width / 2, y: b.top - cb.top + b.height / 2, b: b }; });
-    // barreras entre nodos
-    bars.forEach(function(br, i){
-      var a = nodes[i].getBoundingClientRect(), c = nodes[i + 1].getBoundingClientRect(), vertical = Math.abs(c.top - a.top) > 10;
-      if (vertical) { br.style.left = '50%'; br.style.top = ((a.bottom + c.top) / 2 - cb.top) + 'px'; }
-      else { br.style.left = ((a.right + c.left) / 2 - cb.left) + 'px'; br.style.top = '50%'; }
-    });
-  }
-  function setState(i, hitUpTo){
-    nodes.forEach(function(n, k){
-      n.classList.toggle('hit', k <= hitUpTo);
-      n.classList.toggle('safe', protectedOn && k > hitUpTo);
-      n.querySelector('.st').textContent = protectedOn && k > hitUpTo ? 'Protegido' : 'Comprometido';
-    });
-  }
-  sw.addEventListener('click', function(){
-    protectedOn = !protectedOn; sw.setAttribute('aria-checked', String(protectedOn));
-    chain.parentElement.classList.toggle('on', protectedOn); chain.classList.toggle('on', protectedOn);
-    out.textContent = protectedOn ? '› Con SIR, el ataque se frena en el primer paso: el doble factor deja la clave robada sin uso.' : '› Sin controles, el ataque recorre los 5 pasos.';
-    t0 = performance.now();
-  });
-  function lerp(a, b, p){ return a + (b - a) * p; }
-  function tick(now){
-    if (!pts.length) measure();
-    var seg = 900, pause = 1100, lastIdx = protectedOn ? 0 : 4;
-    var total = (protectedOn ? seg * .5 : seg * 4) + pause, e = (now - t0) % total, x, y, reached;
-    if (protectedOn) {
-      var p = Math.min(1, e / (seg * .5)), a = pts[0], b = pts[1];
-      var stop = .5, q = p * stop;
-      x = lerp(a.x, b.x, q); y = lerp(a.y, b.y, q); reached = 0;
-      pk.style.opacity = p >= 1 ? (Math.sin(now * .02) > 0 ? 1 : .2) : 1;
-    } else {
-      var travel = Math.min(e, seg * 4) / seg, i = Math.min(3, Math.floor(travel)), f = travel - i;
-      if (travel >= 4) { i = 3; f = 1; }
-      x = lerp(pts[i].x, pts[i + 1].x, f); y = lerp(pts[i].y, pts[i + 1].y, f);
-      reached = travel >= 4 ? 4 : Math.floor(travel + .02); pk.style.opacity = 1;
-    }
-    pk.style.left = x + 'px'; pk.style.top = y + 'px';
-    setState(0, reached);
-    if (visible && !reduce) requestAnimationFrame(tick);
-  }
-  addEventListener('resize', measure);
-  (document.fonts ? document.fonts.ready : Promise.resolve()).then(measure);
-  if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ var was = visible; visible = es[0].isIntersecting; if (visible && !was) { measure(); requestAnimationFrame(tick); } }).observe(chain);
-  measure(); setState(0, 4); if (pts.length) { pk.style.left = pts[4].x + 'px'; pk.style.top = pts[4].y + 'px'; }
-})();
-
-/* =====================================================================
-   MAPA DE RED interactivo
-   ===================================================================== */
-(function(){
-  var NS = 'http://www.w3.org/2000/svg';
-  var N = {
-    www:   { x:450, y:60,  t:'WWW',  l:'Internet' },
-    cloud: { x:770, y:80,  t:'M365', l:'Correo y nube', g:'cloud' },
-    fw:    { x:450, y:185, t:'FW',   l:'Router / firewall', g:'fw' },
-    sw:    { x:450, y:310, t:'SW',   l:'Red interna', g:'fw' },
-    wifi:  { x:210, y:250, t:'WiFi', l:'Wi-Fi', g:'wifi' },
-    guest: { x:90,  y:360, t:'INV',   l:'Invitados', g:'wifi' },
-    pc1:   { x:230, y:440, t:'PC',   l:'Administración', g:'pc' },
-    pc2:   { x:350, y:470, t:'PC',   l:'Mostrador', g:'pc' },
-    pc3:   { x:470, y:470, t:'NB',   l:'Notebook', g:'pc' },
-    srv:   { x:610, y:450, t:'SRV',  l:'Servidor', g:'srv' },
-    nas:   { x:760, y:380, t:'NAS',  l:'Backup', g:'nas' }
+  // Conserva el progreso si la página se actualiza mientras alguien la está usando
+  window.claude?.hot?.snapshot?.(() => state);
+  const start = data => {
+    if (data && data.step !== undefined) { state = data; }
+    show(state.step);
   };
-  var LINKS = [['www','fw'],['www','cloud'],['fw','sw'],['fw','wifi'],['wifi','guest'],['sw','pc1'],['sw','pc2'],['sw','pc3'],['sw','srv'],['sw','nas']];
-  var INFO = {
-    fw:   { title:'Router y firewall', tag:'FW', foot:'MikroTik · FortiGate · configuración exportada', items:[
-      ['NET', 'Administración expuesta a internet'], ['NET', 'Clave de fábrica o débil'], ['NET', 'Puertos abiertos innecesarios (RDP, Winbox)'], ['NET', 'Firmware desactualizado'], ['NET', 'Registros y hora sincronizada']] },
-    pc:   { title:'Computadoras', tag:'PC', foot:'Windows 10 / 11 · Active Directory · 21 controles', items:[
-      ['WIN', 'Actualizaciones y versión con soporte'], ['WIN', 'Antivirus activo y al día'], ['WIN', 'Cifrado de disco (BitLocker)'], ['WIN', 'Usuarios con permisos de administrador'], ['WIN', 'Firewall de Windows y escritorio remoto']] },
-    srv:  { title:'Servidores', tag:'SRV', foot:'Linux · 12 controles', items:[
-      ['LNX', 'Acceso SSH como root'], ['LNX', 'Sudo sin contraseña'], ['LNX', 'Usuarios sin clave o con UID 0'], ['LNX', 'Firewall del servidor'], ['LNX', 'Auditoría y registros']] },
-    nas:  { title:'Backups', tag:'NAS', foot:'Lo que más pesa ante un ransomware', items:[
-      ['BAK', 'Copia desconectada de la red'], ['BAK', 'Prueba de recuperación reciente'], ['BAK', 'Copia fuera de la oficina'], ['BAK', 'Quién puede borrar las copias']] },
-    wifi: { title:'Wi-Fi', tag:'WIFI', foot:'Red de oficina e invitados', items:[
-      ['NET', 'Red de invitados separada'], ['NET', 'Cifrado WPA2 / WPA3'], ['NET', 'Clave del equipo cambiada'], ['NET', 'Equipos desconocidos conectados']] },
-    cloud:{ title:'Correo y nube', tag:'M365', foot:'Microsoft 365 · Google Workspace · 8 controles', items:[
-      ['CLD', 'Doble factor en todas las cuentas'], ['CLD', 'Reenvíos automáticos a mails externos'], ['CLD', 'Archivos compartidos con cualquiera'], ['CLD', 'Cantidad de administradores'], ['CLD', 'Inicio de sesión con protocolos viejos']] }
-  };
-  var gL = document.getElementById('links'), gN = document.getElementById('nodes');
-  LINKS.forEach(function(l){
-    var a = N[l[0]], b = N[l[1]];
-    ['lk','flow'].forEach(function(cls, k){
-      var ln = document.createElementNS(NS, 'line'); ln.setAttribute('x1', a.x); ln.setAttribute('y1', a.y); ln.setAttribute('x2', b.x); ln.setAttribute('y2', b.y);
-      ln.setAttribute('class', cls); if (k) ln.style.animationDelay = (-Math.random() * 1.6) + 's'; gL.appendChild(ln);
-    });
-  });
-  var groups = {};
-  Object.keys(N).forEach(function(id){
-    var n = N[id], g = document.createElementNS(NS, 'g');
-    g.setAttribute('class', 'nd'); g.setAttribute('transform', 'translate(' + n.x + ' ' + n.y + ')');
-    if (n.g) { g.setAttribute('tabindex', '0'); g.setAttribute('role', 'button'); g.setAttribute('aria-label', n.l); }
-    g.innerHTML = '<circle class="halo" r="34"></circle><circle class="c" r="34"></circle><text>' + n.t + '</text><text class="lbl" y="54">' + n.l.toUpperCase() + '</text>';
-    if (n.g) {
-      (groups[n.g] = groups[n.g] || []).push(g);
-      g.addEventListener('click', function(){ select(n.g); });
-      g.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(n.g); } });
-    } else g.style.cursor = 'default';
-    gN.appendChild(g);
-  });
-  var chips = document.getElementById('chips');
-  Object.keys(INFO).forEach(function(k){
-    var b = document.createElement('button'); b.type = 'button'; b.textContent = INFO[k].title; b.dataset.k = k;
-    b.addEventListener('click', function(){ select(k); }); chips.appendChild(b);
-  });
-  function select(k){
-    var inf = INFO[k];
-    $$('.nd').forEach(function(g){ g.classList.remove('sel'); });
-    (groups[k] || []).forEach(function(g){ g.classList.add('sel'); });
-    $$('button', chips).forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.k === k)); });
-    $('#pTag').textContent = 'Nodo · ' + inf.tag;
-    resetDec($('#pTitle')); $('#pTitle').textContent = inf.title;
-    $('#pFoot').textContent = inf.foot;
-    $('#pList').innerHTML = inf.items.map(function(it, i){ return '<li><code>' + it[0] + '-' + String(i + 1).padStart(3, '0') + '</code><span>' + it[1] + '</span></li>'; }).join('');
-    decrypt($('#pTitle'), 500);
-  }
-  select('fw');
-})();
-
-/* =====================================================================
-   CONSOLA que escribe + indicador
-   ===================================================================== */
-(function(){
-  var L = [
-    ['p', 'sir@auditoria:~$ ', '', './Audit.ps1 -Task express -AuthorizationId SIR-2026-014'],
-    ['ok','[✓] ', '', 'Autorización verificada · modo solo lectura'],
-    ['d', '[•] ', '', 'Windows: 14 equipos · 21 controles'],
-    ['w', '[!] ', '', 'WIN-021  BitLocker desactivado en 3 notebooks'],
-    ['w', '[!] ', '', 'WIN-008  Administrador local compartido'],
-    ['d', '[•] ', '', 'Red: RouterOS · 10 controles'],
-    ['x', '[X] ', '', 'NET-004  Winbox abierto a internet'],
-    ['d', '[•] ', '', 'Nube: Microsoft 365 · 8 controles'],
-    ['x', '[X] ', '', 'CLD-002  8 cuentas sin doble factor'],
-    ['ok','[✓] ', '', 'Evidencia sellada · sha256 7f3a…c91e'],
-    ['ok','[✓] ', '', 'Seudónimos aplicados · 0 nombres reales en la salida'],
-    ['p', '> ',   '', 'Informe generado: informe-SIR-2026-014.pdf']
-  ];
-  var pre = $('#termOut'), ops = $('#ops'), started = false;
-  function full(){ pre.innerHTML = L.map(function(l){ return '<span class="' + l[0] + '">' + l[1] + '</span>' + l[3]; }).join('\n') + '\n<span class="caret"></span>'; }
-  full();
-  function run(){
-    if (started) return; started = true; ops.classList.add('run');
-    $$('.sev [data-count]').forEach(function(){});
-    if (reduce) return;
-    var li = 0, ci = 0, html = '';
-    (function step(){
-      if (li >= L.length) { pre.innerHTML = html + '<span class="caret"></span>'; return; }
-      var l = L[li];
-      if (ci === 0) html += '<span class="' + l[0] + '">' + l[1] + '</span>';
-      var chunk = li === 0 ? 2 : 4;
-      html += l[3].slice(ci, ci + chunk); ci += chunk;
-      pre.innerHTML = html + '<span class="caret"></span>';
-      if (ci >= l[3].length) { html += '\n'; li++; ci = 0; setTimeout(step, li === 1 ? 380 : 140); }
-      else setTimeout(step, li === 0 ? 28 : 12);
-    })();
-  }
-  if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ if (es[0].isIntersecting) run(); }, { threshold: .35 }).observe(ops);
-  else run();
-})();
-
-/* ---------------- Planes con inclinación 3D ---------------- */
-if (finePointer && !reduce) {
-  $$('.tilt').forEach(function(c){
-    c.addEventListener('pointermove', function(e){ var b = c.getBoundingClientRect(), x = (e.clientX - b.left) / b.width - .5, y = (e.clientY - b.top) / b.height - .5;
-      c.style.transform = 'rotateY(' + (x * 8) + 'deg) rotateX(' + (-y * 8) + 'deg) translateZ(0)'; });
-    c.addEventListener('pointerleave', function(){ c.style.transform = ''; });
-  });
-}
-
-/* ---------------- Candado: se abre al entrar en pantalla (táctil) ---------------- */
-if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ $('#unlock').classList.toggle('open', es[0].isIntersecting && !finePointer); }, { threshold: .6 }).observe($('#unlock'));
-
-/* Descifrar el título del hero al cargar */
-setTimeout(function(){ decrypt($('.hero h1'), 1100); }, reduce ? 0 : 900);
-})();
+  window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
 </script>
 </body>
 </html>
