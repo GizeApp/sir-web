@@ -5,7 +5,7 @@ Sitio estático, sin build: se sube la carpeta tal cual.
 ```
 sitio/
 ├── index.html          landing
-├── chequeo/index.html  chequeo gratis (semáforo, todo en el navegador)
+├── chequeo.html        chequeo gratis (semáforo, todo en el navegador)
 ├── og.png              vista previa al compartir el link (1200×630)
 └── favicon.png         ícono de la pestaña
 ```
