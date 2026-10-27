@@ -14,7 +14,7 @@
 <link rel="canonical" href="https://gizeapp.github.io/sir-web/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="favicon.png">
-<link rel="apple-touch-icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@800;900&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap">
@@ -75,8 +75,8 @@ section{position:relative}
 .arr{transition:transform .2s}.btn:hover .arr{transform:translateX(4px)}
 
 /* ---------- Logo ---------- */
-.logo{display:inline-flex;align-items:baseline;font:800 22px/1 var(--brand);letter-spacing:-.03em;text-decoration:none;color:var(--paper)}
-.logo svg{display:inline-block;width:.42em;height:.7em;margin:0 .05em}
+.logo{display:inline-flex;align-items:center;text-decoration:none;color:var(--paper)}
+.logo svg{display:block;height:20px;width:51px}
 
 /* ---------- Barra superior tipo consola ---------- */
 .bar{position:fixed;top:0;left:0;right:0;z-index:50;padding-top:env(safe-area-inset-top,0px);
@@ -309,8 +309,8 @@ details p{color:var(--soft);padding:0 0 28px 72px;max-width:72ch}
 .final .cta-row{justify-content:center}
 .wa{margin-top:26px;font:500 14px var(--mono);color:var(--mute);user-select:all}
 footer{border-top:1px solid var(--line);overflow:hidden}
-.mega{font:900 clamp(120px,30vw,420px)/.8 var(--brand);letter-spacing:-.07em;color:transparent;-webkit-text-stroke:1px var(--line-2);text-align:center;margin:40px 0 -2.5vw;user-select:none;display:flex;justify-content:center;align-items:baseline}
-.mega svg{width:.36em;height:.72em;margin:0 .04em;opacity:.9}
+.mega{display:flex;justify-content:center;margin:40px 0 -3vw;padding-inline:4vw;user-select:none;--wm-l:transparent;--wm-s:var(--line-2);--wm-sw:1;--wm-k:rgba(198,255,61,.9)}
+.mega svg{display:block;width:min(92vw,1180px);height:auto;aspect-ratio:1997/784;overflow:visible}
 .foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px 30px;padding-block:28px;color:var(--mute);font-size:13px;border-top:1px solid var(--line);position:relative;background:var(--ink)}
 .foot p{max-width:70ch}
 
@@ -335,12 +335,12 @@ footer{border-top:1px solid var(--line);overflow:hidden}
 <div id="boot" aria-hidden="true"><div id="bootlog"></div></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="kh" viewBox="0 0 12 20"><circle cx="6" cy="6" r="6" fill="#C6FF3D"/><path d="M3.4 6h5.2L10.6 20H1.4z" fill="#C6FF3D"/></symbol>
+  <symbol id="sirwm" viewBox="0 0 1997 784"><path style="fill:var(--wm-l,currentColor);stroke:var(--wm-s,none);stroke-width:var(--wm-sw,0)" vector-effect="non-scaling-stroke" d="M0 521L0 521L236 521Q240 547 261.5 566.5Q283 586 320 596.5Q357 607 407 607L407 607Q476 607 514.5 591Q553 575 553 542L553 542Q553 519 531 504.5Q509 490 444 485L444 485L312 474Q150 462 77.5 403.5Q5 345 5 246L5 246Q5 165 52 110.5Q99 56 183 28Q267 0 381 0L381 0Q491 0 576.5 31Q662 62 712.5 118.5Q763 175 768 250L768 250L532 250Q528 228 509.5 211.5Q491 195 457 186Q423 177 376 177L376 177Q314 177 277.5 192Q241 207 241 237L241 237Q241 259 262.5 273Q284 287 342 292L342 292L487 304Q595 312 661.5 337.5Q728 363 758 406.5Q788 450 788 516L788 516Q788 596 740 656.5Q692 717 605.5 750.5Q519 784 403 784L403 784Q284 784 194 751Q104 718 53 658.5Q2 599 0 521ZM1545 507L1452 507L1452 767L1219 767L1219 17L1677 17Q1764 17 1830 48Q1896 79 1933 134Q1970 189 1970 263L1970 263Q1970 335 1933 390.5Q1896 446 1830 476L1830 476Q1813 485 1794 490L1794 490L1997 767L1730 767L1545 507ZM1452 185L1452 341L1642 341Q1686 341 1710.5 321Q1735 301 1735 263Q1735 225 1710.5 205Q1686 185 1642 185L1642 185L1452 185Z"/><path style="fill:var(--wm-k,#C6FF3D)" d="M869 767L900.5 295.5A165 165 0 1 1 1107.6 295.5L1139 767Z"/></symbol>
 </svg>
 
 <header class="bar">
   <div class="wrap bar-in">
-    <a class="logo" href="#top" aria-label="SIR, inicio">S<svg aria-hidden="true"><use href="#kh"/></svg>R</a>
+    <a class="logo" href="#top" aria-label="SIR, inicio"><svg viewBox="0 0 1997 784" aria-hidden="true"><use href="#sirwm"/></svg></a>
     <div class="status"><i></i>Rosario · auditando pymes</div>
     <nav class="links" aria-label="Principal">
       <a href="#ataque">ataque</a><a href="#red">qué revisamos</a><a href="#informe">informe</a><a href="#planes">planes</a><a href="#faq">faq</a>
@@ -582,7 +582,7 @@ footer{border-top:1px solid var(--line);overflow:hidden}
 </main>
 
 <footer>
-  <div class="mega" aria-hidden="true">S<svg><use href="#kh"/></svg>R</div>
+  <div class="mega" aria-hidden="true"><svg viewBox="0 0 1997 784"><use href="#sirwm"/></svg></div>
   <div class="wrap foot">
     <p>Seguridad Informática Rosario · Auditorías de ciberseguridad para pymes del Gran Rosario. El informe refleja el estado de los sistemas al momento del relevamiento y no reemplaza el monitoreo continuo.</p>
     <span>Gran Rosario, Argentina</span>
