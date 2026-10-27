@@ -26,4 +26,4 @@ con el dominio (como `gize.ar` en GIZE) y los registros DNS que indica GitHub.
 
 ## Datos a mantener
 - WhatsApp: `5493413490705` (links `wa.me` en la landing; constantes `WHATSAPP` en el chequeo).
-- Sin precios en la web (decisión comercial): los planes dicen "Consultar".
+- Precios en la web: Express "Desde USD 40", Pyme "Desde USD 150", Integral "Desde USD 260" (fuente: `PAQUETE-COMERCIAL.md`).
