@@ -1,0 +1,7 @@
+# Contacto de seguridad de SIR · Seguridad Informática Rosario (RFC 9116)
+# Si encontraste una vulnerabilidad en nuestros sitios o herramientas, avisanos por acá.
+# No hagas pruebas que afecten la disponibilidad ni accedas a datos de terceros.
+Contact: mailto:security@sirseguridad.com.ar
+Expires: 2027-10-27T23:59:59-03:00
+Preferred-Languages: es, en
+Canonical: https://sirseguridad.com.ar/.well-known/security.txt
