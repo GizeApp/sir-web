@@ -8,6 +8,8 @@ sitio/
 ├── chequeo.html            chequeo gratis (semáforo + informe PDF, todo en el navegador)
 ├── og.png                  vista previa al compartir el link (1200×630)
 ├── robots.txt · sitemap.xml para buscadores (los datos estructurados JSON-LD van en el <head> de index.html)
+├── loop-*.mp4 · loop-*.jpg  loops 4:5 de los reels 05 y 06 (544×680, sin sonido, ~200 KB) y su imagen fija
+│                           se rehacen con ffmpeg: recorte crop=1080:1350:0:110 + fundidos de 0,35 s (ver git log)
 ├── favicon.png · apple-touch-icon.png
 ├── fonts.css · *.woff2     Unbounded + JetBrains Mono alojadas acá (sin Google Fonts)
 ├── landing.js · chequeo.js · js-flag.js
