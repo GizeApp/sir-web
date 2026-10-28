@@ -11,9 +11,40 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="SIR · Seguridad Informática Rosario">
 <meta property="og:description" content="Encontramos tus fallas antes que un atacante. Hacé el chequeo gratis.">
-<meta property="og:image" content="https://gizeapp.github.io/sir-web/og.png">
-<meta property="og:url" content="https://gizeapp.github.io/sir-web/">
-<link rel="canonical" href="https://gizeapp.github.io/sir-web/">
+<meta property="og:image" content="https://sirseguridad.com.ar/og.png">
+<meta property="og:url" content="https://sirseguridad.com.ar/">
+<link rel="canonical" href="https://sirseguridad.com.ar/">
+<!-- Datos estructurados para buscadores (no es un script ejecutable: la CSP no lo bloquea). Mantenerlos iguales a la página. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://sirseguridad.com.ar/#sir",
+      "name": "SIR · Seguridad Informática Rosario",
+      "description": "Auditorías de ciberseguridad para pymes: equipos, red y nube, en modo solo lectura, con informe en 72 hs.",
+      "url": "https://sirseguridad.com.ar/",
+      "image": "https://sirseguridad.com.ar/og.png",
+      "telephone": "+54 9 341 349-0705",
+      "priceRange": "USD 40 - USD 260",
+      "address": { "@type": "PostalAddress", "addressLocality": "Rosario", "addressRegion": "Santa Fe", "addressCountry": "AR" },
+      "areaServed": { "@type": "AdministrativeArea", "name": "Gran Rosario" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "¿Puede dejar de funcionar algo mientras auditan?", "acceptedAnswer": { "@type": "Answer", "text": "No. Todo el relevamiento es de solo lectura: miramos la configuración, no instalamos ni modificamos nada y no hacemos pruebas que puedan afectar el funcionamiento. Tu empresa sigue trabajando normal." } },
+        { "@type": "Question", "name": "¿Qué pasa con mis datos?", "acceptedAnswer": { "@type": "Answer", "text": "Antes de cualquier análisis, los nombres de equipos, usuarios y direcciones se reemplazan por códigos. Firmamos un acuerdo de confidencialidad y, al cerrar el trabajo, la información se destruye de forma segura." } },
+        { "@type": "Question", "name": "¿Usan inteligencia artificial?", "acceptedAnswer": { "@type": "Answer", "text": "Sí, para acelerar el análisis y la redacción del informe. Siempre con los datos ya reemplazados por códigos, y cada hallazgo lo revisa una persona antes de llegar a vos. Lo dejamos por escrito en el acuerdo." } },
+        { "@type": "Question", "name": "Ya tengo antivirus y un técnico. ¿Me sirve igual?", "acceptedAnswer": { "@type": "Answer", "text": "Sí. El antivirus es una sola capa, y la auditoría no reemplaza a tu técnico: le da una mirada externa y una lista priorizada para trabajar." } },
+        { "@type": "Question", "name": "¿Me garantizan que no me van a hackear?", "acceptedAnswer": { "@type": "Answer", "text": "Nadie serio puede garantizar eso. Lo que te damos es visibilidad: saber en qué estado real está tu empresa y qué conviene resolver primero para bajar el riesgo." } },
+        { "@type": "Question", "name": "¿Cuánto tarda?", "acceptedAnswer": { "@type": "Answer", "text": "En una pyme típica, medio día en tu empresa y el informe dentro de las 72 horas." } }
+      ]
+    }
+  ]
+}
+</script>
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -31,7 +62,7 @@
   --red:#FF4D42; --amber:#FFB72B; --green:#34D399;
   --display:'JetBrains Mono',ui-monospace,'DejaVu Sans Mono',Consolas,monospace;
   --brand:'Unbounded','Arial Black',sans-serif;
-  --body:'JetBrains Mono',ui-monospace,'DejaVu Sans Mono',Consolas,monospace;
+  --body:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;   /* texto corrido en sans legible; la mono queda para datos y etiquetas */
   --mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
   color-scheme:dark;
 }
@@ -50,6 +81,7 @@ h1,h2,h3{margin:0;font-family:var(--display);font-weight:800;letter-spacing:-.03
 .tag b{color:var(--lime);font-weight:500}
 .h2{font-size:clamp(36px,6vw,82px);margin-top:20px}
 .lead{color:var(--soft);font-size:clamp(17px,1.5vw,20px);max-width:56ch;margin-top:22px}
+.hero .lead{max-width:27em}   /* que no llegue al 3D: ~60 caracteres por línea */
 section{position:relative}
 .pad{padding-block:clamp(90px,13vw,170px)}
 
@@ -102,24 +134,25 @@ section{position:relative}
 .reticle.big::after{inset:27px}
 
 /* ---------- WhatsApp flotante ---------- */
-.wa-float{position:fixed;z-index:65;right:max(18px,env(safe-area-inset-right,0px));bottom:max(18px,env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:flex-end;gap:12px;pointer-events:none}
+.wa-float{position:fixed;z-index:65;right:max(clamp(24px,4vw,56px),env(safe-area-inset-right,0px));bottom:max(clamp(24px,4vw,48px),env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:flex-end;gap:12px;pointer-events:none}
 .wa-float > *{pointer-events:auto}
-.wa-btn{position:relative;display:grid;place-items:center;width:58px;height:58px;border-radius:50%;background:#25D366;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.08) inset;transition:transform .2s ease-out,box-shadow .2s}
-.wa-btn svg{width:30px;height:30px;fill:currentColor}
+.wa-btn{position:relative;display:grid;place-items:center;width:72px;height:72px;border-radius:50%;background:#25D366;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.08) inset;transition:transform .2s ease-out,box-shadow .2s}
+.wa-btn svg{width:38px;height:38px;fill:currentColor}
 .wa-btn:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 14px 34px rgba(0,0,0,.5)}
 .wa-btn:focus-visible{outline:2px solid var(--lime);outline-offset:4px}
 .wa-btn::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #25D366;animation:wa-ring 2.6s ease-out 3}
 @keyframes wa-ring{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.6);opacity:0}}
-.wa-bubble{position:relative;max-width:250px;background:var(--panel);border:1px solid var(--line-2,#3A3A40);padding:14px 36px 14px 16px;font:400 14px/1.45 var(--mono);color:var(--soft);box-shadow:0 12px 32px rgba(0,0,0,.45);transform-origin:bottom right;animation:wa-in .35s cubic-bezier(.2,.8,.2,1)}
+.wa-bubble{position:relative;max-width:250px;background:var(--panel);border:1px solid var(--line-2,#3A3A40);padding:14px 36px 14px 16px;font:400 15px/1.45 var(--body);color:var(--soft);box-shadow:0 12px 32px rgba(0,0,0,.45);transform-origin:bottom right;animation:wa-in .35s cubic-bezier(.2,.8,.2,1)}
 .wa-bubble[hidden]{display:none}
 .wa-bubble b{display:block;color:var(--paper);font-weight:600;margin-bottom:2px}
 .wa-bubble a{color:var(--lime);text-decoration:none}
 .wa-bubble a:hover{text-decoration:underline}
-.wa-bubble::after{content:"";position:absolute;right:22px;bottom:-7px;width:12px;height:12px;background:var(--panel);border-right:1px solid var(--line-2,#3A3A40);border-bottom:1px solid var(--line-2,#3A3A40);transform:rotate(45deg)}
+.wa-bubble::after{content:"";position:absolute;right:30px;bottom:-7px;width:12px;height:12px;background:var(--panel);border-right:1px solid var(--line-2,#3A3A40);border-bottom:1px solid var(--line-2,#3A3A40);transform:rotate(45deg)}
 .wa-x{position:absolute;top:6px;right:6px;width:26px;height:26px;border:0;background:transparent;color:var(--mute);font:400 18px/1 var(--mono);cursor:pointer}
 .wa-x:hover{color:var(--paper)}
 @keyframes wa-in{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.wa-btn::after{animation:none;display:none}.wa-bubble{animation:none}}
+@media (max-width:600px){.wa-btn{width:64px;height:64px}.wa-btn svg{width:34px;height:34px}.wa-bubble::after{right:26px}}
 @media print{.wa-float{display:none}}
 
 /* ---------- Neón: brillo en los acentos (lima de marca, severidades y WhatsApp) ---------- */
@@ -143,10 +176,6 @@ section{position:relative}
 @media (prefers-reduced-motion:reduce){.hero h1 .lime{animation:none}}
 
 /* ---------- Arranque ---------- */
-#boot{position:fixed;inset:0;z-index:100;background:var(--ink);display:grid;place-items:center;font:500 14px/1.9 var(--mono);color:var(--mute);transition:transform .7s cubic-bezier(.7,0,.2,1)}
-#boot.out{transform:translateY(-100%)}
-#boot .l{opacity:0;animation:in .01s forwards}
-#boot .ok{color:var(--lime)}
 @keyframes in{to{opacity:1}}
 
 /* =============== HERO =============== */
@@ -301,6 +330,20 @@ section{position:relative}
 .p-step:hover::after{transform:scaleX(1)}
 @media (max-width:900px){.proto{grid-template-columns:1fr}.p-step{border-left:0;border-top:1px solid var(--line)}.p-step:first-child{border-top:0}}
 
+/* =============== QUIÉN AUDITA =============== */
+.who{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:clamp(32px,6vw,90px);align-items:center;margin-top:60px}
+.who-photo{position:relative;aspect-ratio:4/5;background:var(--panel);border:1px solid var(--line-2);overflow:hidden}
+.who-photo img{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05)}
+.who-photo::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:4px;background:var(--lime)}
+.who-name{font-size:clamp(34px,4.6vw,64px)}
+.who-role{margin-top:14px;font:500 13px/1.5 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--lime)}
+.who p.txt{color:var(--soft);font-size:clamp(16px,1.3vw,18px);max-width:60ch;margin-top:22px}
+.who ul{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:10px}
+.who li{display:flex;gap:12px;align-items:baseline;color:var(--paper)}
+.who li::before{content:"✓";color:var(--lime);font:700 14px/1 var(--mono)}
+.who .cta-row{margin-top:32px}
+@media (max-width:760px){.who{grid-template-columns:1fr}.who-photo{max-width:260px}}
+
 /* =============== PLANES =============== */
 .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:60px;align-items:stretch;perspective:1200px}
 .plan{position:relative;background:var(--panel);border:1px solid var(--line);padding:34px 30px;display:flex;flex-direction:column;gap:10px;transform-style:preserve-3d;transition:transform .2s ease-out,border-color .3s}
@@ -358,6 +401,10 @@ footer{border-top:1px solid var(--line);overflow:hidden}
 .mega svg{display:block;width:min(92vw,1180px);height:auto;aspect-ratio:1997/784;overflow:visible}
 .foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px 30px;padding-block:28px;color:var(--mute);font-size:13px;border-top:1px solid var(--line);position:relative;background:var(--ink)}
 .foot p{max-width:70ch}
+.foot-links{display:flex;flex-wrap:wrap;gap:6px 22px}
+.foot-links a{color:var(--soft);text-decoration:none;font:500 13px/1.6 var(--mono)}
+.foot-links a:hover{color:var(--lime)}
+.foot-links a:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
 
 /* Revelado suave (el contenido ya está visible; solo se desplaza un poco) */
 .rv{transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .9s}
@@ -377,8 +424,6 @@ footer{border-top:1px solid var(--line);overflow:hidden}
 <div class="scanlines" aria-hidden="true"></div>
 <div class="reticle" aria-hidden="true"></div>
 
-<div id="boot" aria-hidden="true"><div id="bootlog"></div></div>
-
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="sirwm" viewBox="0 0 1997 784"><path style="fill:var(--wm-l,currentColor);stroke:var(--wm-s,none);stroke-width:var(--wm-sw,0)" vector-effect="non-scaling-stroke" d="M0 521L0 521L236 521Q240 547 261.5 566.5Q283 586 320 596.5Q357 607 407 607L407 607Q476 607 514.5 591Q553 575 553 542L553 542Q553 519 531 504.5Q509 490 444 485L444 485L312 474Q150 462 77.5 403.5Q5 345 5 246L5 246Q5 165 52 110.5Q99 56 183 28Q267 0 381 0L381 0Q491 0 576.5 31Q662 62 712.5 118.5Q763 175 768 250L768 250L532 250Q528 228 509.5 211.5Q491 195 457 186Q423 177 376 177L376 177Q314 177 277.5 192Q241 207 241 237L241 237Q241 259 262.5 273Q284 287 342 292L342 292L487 304Q595 312 661.5 337.5Q728 363 758 406.5Q788 450 788 516L788 516Q788 596 740 656.5Q692 717 605.5 750.5Q519 784 403 784L403 784Q284 784 194 751Q104 718 53 658.5Q2 599 0 521ZM1545 507L1452 507L1452 767L1219 767L1219 17L1677 17Q1764 17 1830 48Q1896 79 1933 134Q1970 189 1970 263L1970 263Q1970 335 1933 390.5Q1896 446 1830 476L1830 476Q1813 485 1794 490L1794 490L1997 767L1730 767L1545 507ZM1452 185L1452 341L1642 341Q1686 341 1710.5 321Q1735 301 1735 263Q1735 225 1710.5 205Q1686 185 1642 185L1642 185L1452 185Z"/><path style="fill:var(--wm-k,#C6FF3D)" d="M869 767L900.5 295.5A165 165 0 1 1 1107.6 295.5L1139 767Z"/></symbol>
 </svg>
@@ -388,7 +433,7 @@ footer{border-top:1px solid var(--line);overflow:hidden}
     <a class="logo" href="#top" aria-label="SIR, inicio"><svg viewBox="0 0 1997 784" aria-hidden="true"><use href="#sirwm"/></svg></a>
     <div class="status"><i></i>Rosario · auditando pymes</div>
     <nav class="links" aria-label="Principal">
-      <a href="#ataque">ataque</a><a href="#red">qué revisamos</a><a href="#informe">informe</a><a href="#planes">planes</a><a href="#faq">faq</a>
+      <a href="#ataque">la cadena</a><a href="#red">qué revisamos</a><a href="#informe">informe</a><a href="#planes">planes</a><a href="#faq">faq</a>
     </nav>
     <a class="btn btn-lime btn-sm" href="chequeo.html">Chequeo gratis</a>
   </div>
@@ -446,9 +491,9 @@ footer{border-top:1px solid var(--line);overflow:hidden}
   <div class="wrap">
     <div class="chain-head">
       <div>
-        <div class="tag"><b>01</b> / Anatomía de un ataque</div>
-        <h2 class="h2 rv" data-decrypt>Así se para <span class="lime">una pyme.</span></h2>
-        <p class="lead">Un ataque típico no es una película de hackers: es una cadena de descuidos chicos. Activá la auditoría y mirá dónde se corta.</p>
+        <div class="tag">Por qué importa</div>
+        <h2 class="h2 rv" data-decrypt>Cinco descuidos chicos. <span class="lime">Cuatro cortes.</span></h2>
+        <p class="lead">Un problema serio casi nunca es una película de hackers: es una cadena de descuidos chicos. Activá la auditoría y mirá dónde se corta.</p>
       </div>
       <button class="switch" id="sw" role="switch" aria-checked="false"><span class="lbl-off">Sin auditoría</span><span class="t" aria-hidden="true"></span><span class="lbl-on">Con SIR</span></button>
     </div>
@@ -471,7 +516,7 @@ footer{border-top:1px solid var(--line);overflow:hidden}
 <!-- ================= MAPA DE RED ================= -->
 <section class="pad" id="red" style="padding-top:0">
   <div class="wrap">
-    <div class="tag"><b>02</b> / Qué revisamos</div>
+    <div class="tag">Qué revisamos</div>
     <h2 class="h2 rv" data-decrypt>Tu oficina, <span class="lime">nodo por nodo.</span></h2>
     <p class="lead">Tocá cada parte de la red para ver qué controlamos. Todo en modo lectura: miramos la configuración, no la cambiamos.</p>
     <div class="map-grid">
@@ -496,9 +541,9 @@ footer{border-top:1px solid var(--line);overflow:hidden}
 <!-- ================= CONSOLA + INDICADOR ================= -->
 <section class="pad" id="informe" style="padding-top:0">
   <div class="wrap">
-    <div class="tag"><b>03</b> / Del escaneo al informe</div>
+    <div class="tag">Del relevamiento al informe</div>
     <h2 class="h2 rv" data-decrypt>Datos técnicos adentro. <span class="lime">Un semáforo afuera.</span></h2>
-    <p class="lead">El relevamiento es automático, la evidencia queda sellada y los nombres de tu gente se reemplazan por códigos. Vos recibís un resumen que se entiende en 2 minutos.</p>
+    <p class="lead">El relevamiento es automático, la evidencia queda sellada y los nombres de tu gente se reemplazan por códigos. Cada hallazgo está mapeado a CIS Controls v8 y vos recibís un resumen que se entiende en 2 minutos.</p>
     <div class="ops" id="ops">
       <div class="term">
         <div class="term-top"><i></i><i></i><i></i><span>sir@auditoria · cliente-demo</span></div>
@@ -527,12 +572,38 @@ footer{border-top:1px solid var(--line);overflow:hidden}
 <!-- ================= PROTOCOLO ================= -->
 <section class="pad" id="protocolo" style="padding-top:0">
   <div class="wrap">
-    <div class="tag"><b>04</b> / Protocolo</div>
+    <div class="tag">Cómo trabajamos</div>
     <h2 class="h2 rv" data-decrypt>Tres pasos. <span class="lime">Cero sorpresas.</span></h2>
     <div class="proto">
-      <div class="p-step"><div class="big">01</div><h3>Firmamos</h3><p>Autorización y confidencialidad por escrito, con el alcance definido, antes de tocar nada.</p><span class="tag">Marco legal argentino</span></div>
+      <div class="p-step"><div class="big">01</div><h3>Firmamos</h3><p>Autorización y confidencialidad por escrito, con el alcance definido, antes de tocar nada.</p><span class="tag">Autorización · NDA · uso de IA</span></div>
       <div class="p-step"><div class="big">02</div><h3>Relevamos</h3><p>Medio día en tu empresa. Leemos configuraciones: no se instala, no se cambia y no se borra nada.</p><span class="tag">Equipos · red · nube</span></div>
       <div class="p-step"><div class="big">03</div><h3>Te entregamos</h3><p>Informe en 72 hs y una reunión para explicarlo, con el plan de qué resolver primero.</p><span class="tag">Resumen + anexo técnico</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= QUIÉN AUDITA =================
+     Queda oculta (hidden) hasta tener los datos reales: nombre, foto y LinkedIn.
+     Para publicarla: completar los [[...]], guardar la foto como quien-audita.jpg (4:5, ~800×1000) y sacar "hidden". -->
+<section class="pad" id="quien" style="padding-top:0" hidden>
+  <div class="wrap">
+    <div class="tag">Quién audita</div>
+    <div class="who">
+      <div class="who-photo"><img src="quien-audita.jpg" alt="[[NOMBRE APELLIDO]], auditor de SIR" width="800" height="1000" loading="lazy"></div>
+      <div>
+        <h2 class="who-name rv" data-decrypt>[[NOMBRE APELLIDO]]</h2>
+        <p class="who-role">Estudiante avanzado de la Tecnicatura Universitaria en Ciberseguridad · UGR</p>
+        <p class="txt">Hago cada relevamiento en persona y firmo la autorización y la confidencialidad con mi nombre. La automatización y la IA aceleran el análisis, pero cada hallazgo lo reviso yo antes de que llegue a vos.</p>
+        <ul>
+          <li>Solo trabajo con autorización firmada y alcance por escrito.</li>
+          <li>Confidencialidad (NDA) y datos reemplazados por códigos.</li>
+          <li>Hallazgos con estándar: CIS Controls v8, no opiniones sueltas.</li>
+        </ul>
+        <div class="cta-row">
+          <a class="btn btn-line" href="[[URL LINKEDIN]]" target="_blank" rel="noopener me">Ver LinkedIn</a>
+          <a class="btn btn-lime" href="https://wa.me/5493413490705?text=Hola%20SIR!%20Quiero%20consultar%20por%20una%20auditor%C3%ADa." target="_blank" rel="noopener">Escribime por WhatsApp <span class="arr" aria-hidden="true">→</span></a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -540,11 +611,10 @@ footer{border-top:1px solid var(--line);overflow:hidden}
 <!-- ================= PLANES ================= -->
 <section class="pad" id="planes" style="padding-top:0">
   <div class="wrap">
-    <div class="tag"><b>05</b> / Planes</div>
-    <h2 class="h2 rv" data-decrypt>Elegí tu <span class="lime">nivel de acceso.</span></h2>
+    <div class="tag">Planes</div>
+    <h2 class="h2 rv" data-decrypt>Elegí <span class="lime">cuánto revisamos.</span></h2>
     <div class="plans">
       <article class="plan tilt">
-        <span class="lvl">Nivel 1</span>
         <h3>Chequeo Express</h3>
         <p class="for">Para 1 a 3 computadoras</p>
         <p class="price"><small>Desde</small><b>USD 40</b></p>
@@ -553,7 +623,6 @@ footer{border-top:1px solid var(--line);overflow:hidden}
       </article>
       <article class="plan best tilt">
         <span class="badge">Recomendado</span>
-        <span class="lvl">Nivel 2</span>
         <h3>Auditoría Pyme</h3>
         <p class="for">Para una oficina típica</p>
         <p class="price"><small>Desde</small><b>USD 150</b></p>
@@ -561,7 +630,6 @@ footer{border-top:1px solid var(--line);overflow:hidden}
         <a class="btn btn-lime" href="https://wa.me/5493413490705?text=Hola%20SIR!%20Quiero%20consultar%20por%20la%20Auditor%C3%ADa%20Pyme." target="_blank" rel="noopener">Consultar <span class="arr" aria-hidden="true">→</span></a>
       </article>
       <article class="plan tilt">
-        <span class="lvl">Nivel 3</span>
         <h3>Auditoría Integral</h3>
         <p class="for">Con servidores o más equipos</p>
         <p class="price"><small>Desde</small><b>USD 260</b></p>
@@ -596,20 +664,20 @@ footer{border-top:1px solid var(--line);overflow:hidden}
 <!-- ================= FAQ ================= -->
 <section class="pad" id="faq" style="padding-top:0">
   <div class="wrap">
-    <div class="tag"><b>06</b> / Preguntas</div>
+    <div class="tag">Preguntas</div>
     <h2 class="h2 rv" data-decrypt>Sin letra chica.</h2>
     <div class="faq">
-      <details open><summary><span class="q">Q.01</span>¿Puede dejar de funcionar algo mientras auditan?</summary>
+      <details open><summary>¿Puede dejar de funcionar algo mientras auditan?</summary>
         <p>No. Todo el relevamiento es de solo lectura: miramos la configuración, no instalamos ni modificamos nada y no hacemos pruebas que puedan afectar el funcionamiento. Tu empresa sigue trabajando normal.</p></details>
-      <details><summary><span class="q">Q.02</span>¿Qué pasa con mis datos?</summary>
+      <details><summary>¿Qué pasa con mis datos?</summary>
         <p>Antes de cualquier análisis, los nombres de equipos, usuarios y direcciones se reemplazan por códigos. Firmamos un acuerdo de confidencialidad y, al cerrar el trabajo, la información se destruye de forma segura.</p></details>
-      <details><summary><span class="q">Q.03</span>¿Usan inteligencia artificial?</summary>
+      <details><summary>¿Usan inteligencia artificial?</summary>
         <p>Sí, para acelerar el análisis y la redacción del informe. Siempre con los datos ya reemplazados por códigos, y cada hallazgo lo revisa una persona antes de llegar a vos. Lo dejamos por escrito en el acuerdo.</p></details>
-      <details><summary><span class="q">Q.04</span>Ya tengo antivirus y un técnico. ¿Me sirve igual?</summary>
+      <details><summary>Ya tengo antivirus y un técnico. ¿Me sirve igual?</summary>
         <p>Sí. El antivirus es una sola capa, y la auditoría no reemplaza a tu técnico: le da una mirada externa y una lista priorizada para trabajar.</p></details>
-      <details><summary><span class="q">Q.05</span>¿Me garantizan que no me van a hackear?</summary>
+      <details><summary>¿Me garantizan que no me van a hackear?</summary>
         <p>Nadie serio puede garantizar eso. Lo que te damos es visibilidad: saber en qué estado real está tu empresa y qué conviene resolver primero para bajar el riesgo.</p></details>
-      <details><summary><span class="q">Q.06</span>¿Cuánto tarda?</summary>
+      <details><summary>¿Cuánto tarda?</summary>
         <p>En una pyme típica, medio día en tu empresa y el informe dentro de las 72 horas.</p></details>
     </div>
   </div>
@@ -618,7 +686,7 @@ footer{border-top:1px solid var(--line);overflow:hidden}
 <!-- ================= CIERRE ================= -->
 <section class="pad" style="padding-top:0">
   <div class="wrap final">
-    <div class="tag"><b>›</b> Fin de la transmisión</div>
+    <div class="tag">Siguiente paso</div>
     <h2 style="margin-top:22px" data-decrypt class="rv">Sabé cómo está <span class="lime">tu empresa.</span></h2>
     <div class="cta-row">
       <a class="btn btn-lime" href="chequeo.html">Hacé el chequeo gratis <span class="arr" aria-hidden="true">→</span></a>
@@ -632,7 +700,10 @@ footer{border-top:1px solid var(--line);overflow:hidden}
 <footer>
   <div class="mega" aria-hidden="true"><svg viewBox="0 0 1997 784"><use href="#sirwm"/></svg></div>
   <div class="wrap foot">
-    <p>Seguridad Informática Rosario · Auditorías de ciberseguridad para pymes del Gran Rosario. El informe refleja el estado de los sistemas al momento del relevamiento y no reemplaza el monitoreo continuo.</p>
+    <p>Seguridad Informática Rosario · Auditorías de ciberseguridad para pymes del Gran Rosario. Hallazgos mapeados a CIS Controls v8. El informe refleja el estado de los sistemas al momento del relevamiento y no reemplaza el monitoreo continuo.</p>
+    <nav class="foot-links" aria-label="Pie">
+      <a href="chequeo.html">Chequeo gratis</a><a href="#planes">Planes</a><a href="#faq">Preguntas</a><a href="https://wa.me/5493413490705?text=Hola%20SIR!%20Tengo%20una%20consulta." target="_blank" rel="noopener">WhatsApp +54 9 341 349-0705</a>
+    </nav>
     <span>Gran Rosario, Argentina</span>
   </div>
 </footer>

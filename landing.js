@@ -5,26 +5,6 @@ var finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
 var $ = function(s, r){ return (r||document).querySelector(s); };
 var $$ = function(s, r){ return [].slice.call((r||document).querySelectorAll(s)); };
 
-/* ---------------- Arranque (una vez por sesión) ---------------- */
-(function boot(){
-  var el = $('#boot'), seen = false;
-  try { seen = sessionStorage.getItem('sir-boot') === '1'; sessionStorage.setItem('sir-boot', '1'); } catch(e) {}
-  if (reduce || seen) { el.remove(); return; }
-  var lines = [
-    ['sir@auditoria:~$ ./iniciar --modo solo-lectura', ''],
-    ['[ok] autorización firmada', 'ok'],
-    ['[ok] seudonimización activa', 'ok'],
-    ['[ok] cargando módulos: windows · red · linux · nube', 'ok'],
-    ['> listo.', 'ok']
-  ];
-  var log = $('#bootlog');
-  lines.forEach(function(l, i){
-    var d = document.createElement('div'); d.className = 'l ' + l[1]; d.textContent = l[0];
-    d.style.animationDelay = (i * 180) + 'ms'; log.appendChild(d);
-  });
-  setTimeout(function(){ el.classList.add('out'); }, 1150);
-  setTimeout(function(){ el.remove(); }, 1900);
-})();
 
 /* ---------------- Texto que se "descifra" ---------------- */
 var GLYPHS = "ABCDEFGHKLMNPRSTUVXYZ0123456789#%&$";
@@ -514,7 +494,7 @@ if (finePointer && !reduce) {
 if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ $('#unlock').classList.toggle('open', es[0].isIntersecting && !finePointer); }, { threshold: .6 }).observe($('#unlock'));
 
 /* Descifrar el título del hero al cargar */
-setTimeout(function(){ decrypt($('.hero h1'), 1100); }, reduce ? 0 : 900);
+setTimeout(function(){ decrypt($('.hero h1'), 1100); }, reduce ? 0 : 150);
 })();
 
 /* ---------------- WhatsApp flotante: mensaje una vez por visita ---------------- */
