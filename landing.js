@@ -516,3 +516,18 @@ if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ $('
 /* Descifrar el título del hero al cargar */
 setTimeout(function(){ decrypt($('.hero h1'), 1100); }, reduce ? 0 : 900);
 })();
+
+/* ---------------- WhatsApp flotante: mensaje una vez por visita ---------------- */
+(function(){
+  'use strict';
+  var bubble = document.getElementById('waBubble'), close = document.getElementById('waClose');
+  if (!bubble) return;
+  var seen = false;
+  try { seen = sessionStorage.getItem('sir-wa') === '1'; } catch(e) {}
+  var dismissed = false;
+  function hide(){ dismissed = true; bubble.hidden = true; try { sessionStorage.setItem('sir-wa', '1'); } catch(e) {} }
+  close.addEventListener('click', hide);
+  bubble.querySelector('a').addEventListener('click', hide);
+  document.querySelector('.wa-btn').addEventListener('click', hide);
+  if (!seen) setTimeout(function(){ if (!dismissed) bubble.hidden = false; }, 7000);
+})();

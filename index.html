@@ -101,6 +101,47 @@ section{position:relative}
 .reticle.big{width:58px;height:58px;margin:-29px 0 0 -29px}
 .reticle.big::after{inset:27px}
 
+/* ---------- WhatsApp flotante ---------- */
+.wa-float{position:fixed;z-index:65;right:max(18px,env(safe-area-inset-right,0px));bottom:max(18px,env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:flex-end;gap:12px;pointer-events:none}
+.wa-float > *{pointer-events:auto}
+.wa-btn{position:relative;display:grid;place-items:center;width:58px;height:58px;border-radius:50%;background:#25D366;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.08) inset;transition:transform .2s ease-out,box-shadow .2s}
+.wa-btn svg{width:30px;height:30px;fill:currentColor}
+.wa-btn:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 14px 34px rgba(0,0,0,.5)}
+.wa-btn:focus-visible{outline:2px solid var(--lime);outline-offset:4px}
+.wa-btn::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #25D366;animation:wa-ring 2.6s ease-out 3}
+@keyframes wa-ring{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.6);opacity:0}}
+.wa-bubble{position:relative;max-width:250px;background:var(--panel);border:1px solid var(--line-2,#3A3A40);padding:14px 36px 14px 16px;font:400 14px/1.45 var(--mono);color:var(--soft);box-shadow:0 12px 32px rgba(0,0,0,.45);transform-origin:bottom right;animation:wa-in .35s cubic-bezier(.2,.8,.2,1)}
+.wa-bubble[hidden]{display:none}
+.wa-bubble b{display:block;color:var(--paper);font-weight:600;margin-bottom:2px}
+.wa-bubble a{color:var(--lime);text-decoration:none}
+.wa-bubble a:hover{text-decoration:underline}
+.wa-bubble::after{content:"";position:absolute;right:22px;bottom:-7px;width:12px;height:12px;background:var(--panel);border-right:1px solid var(--line-2,#3A3A40);border-bottom:1px solid var(--line-2,#3A3A40);transform:rotate(45deg)}
+.wa-x{position:absolute;top:6px;right:6px;width:26px;height:26px;border:0;background:transparent;color:var(--mute);font:400 18px/1 var(--mono);cursor:pointer}
+.wa-x:hover{color:var(--paper)}
+@keyframes wa-in{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.wa-btn::after{animation:none;display:none}.wa-bubble{animation:none}}
+@media print{.wa-float{display:none}}
+
+/* ---------- Neón: brillo en los acentos (lima de marca, severidades y WhatsApp) ---------- */
+:root{--neon:0 0 6px rgba(198,255,61,.55),0 0 18px rgba(198,255,61,.35),0 0 42px rgba(198,255,61,.18)}
+.hero h1 .lime,.h2 .lime{text-shadow:var(--neon)}
+.hero h1 .lime{animation:neon-on 1.6s steps(1) .9s both}
+.hero h1 .stroke{filter:drop-shadow(0 0 10px rgba(244,242,238,.18))}
+.hero h1::after{text-shadow:var(--neon)}
+.caret{box-shadow:0 0 14px var(--lime-glow)}
+.tag b{text-shadow:0 0 10px var(--lime-glow)}
+.btn-lime{box-shadow:0 0 0 1px rgba(198,255,61,.7),0 0 22px rgba(198,255,61,.35),0 0 60px rgba(198,255,61,.12);transition:box-shadow .25s,background .2s,transform .2s}
+.btn-lime:hover{box-shadow:0 0 0 1px var(--lime),0 0 30px rgba(198,255,61,.55),0 0 80px rgba(198,255,61,.2)}
+.bar{box-shadow:0 1px 0 rgba(198,255,61,.12),0 8px 30px -12px rgba(198,255,61,.25)}
+.plan.best{box-shadow:0 0 34px rgba(198,255,61,.14),0 0 0 1px rgba(198,255,61,.08)}
+.plan .badge{box-shadow:0 0 18px rgba(198,255,61,.5)}
+.sev .r b{text-shadow:0 0 14px rgba(255,77,66,.6)}.sev .a b{text-shadow:0 0 14px rgba(255,183,43,.5)}.sev .g b{text-shadow:var(--neon)}
+.pill.crit{box-shadow:0 0 14px rgba(255,77,66,.3)}
+.wa-btn{box-shadow:0 10px 30px rgba(0,0,0,.45),0 0 18px rgba(37,211,102,.55),0 0 44px rgba(37,211,102,.22)}
+.wa-btn:hover{box-shadow:0 14px 34px rgba(0,0,0,.5),0 0 26px rgba(37,211,102,.75),0 0 60px rgba(37,211,102,.3)}
+@keyframes neon-on{0%{opacity:.15}8%{opacity:1}12%{opacity:.3}18%{opacity:1}24%{opacity:.5}30%,100%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.hero h1 .lime{animation:none}}
+
 /* ---------- Arranque ---------- */
 #boot{position:fixed;inset:0;z-index:100;background:var(--ink);display:grid;place-items:center;font:500 14px/1.9 var(--mono);color:var(--mute);transition:transform .7s cubic-bezier(.7,0,.2,1)}
 #boot.out{transform:translateY(-100%)}
@@ -595,6 +636,17 @@ footer{border-top:1px solid var(--line);overflow:hidden}
     <span>Gran Rosario, Argentina</span>
   </div>
 </footer>
+
+<div class="wa-float">
+  <div class="wa-bubble" id="waBubble" hidden role="status">
+    <button class="wa-x" type="button" id="waClose" aria-label="Cerrar mensaje">×</button>
+    <b>¿Tenés una consulta?</b>
+    <a href="https://wa.me/5493413490705?text=Hola%20SIR!%20Tengo%20una%20consulta." target="_blank" rel="noopener">Escribinos por WhatsApp</a> y te respondemos.
+  </div>
+  <a class="wa-btn" href="https://wa.me/5493413490705?text=Hola%20SIR!%20Tengo%20una%20consulta." target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+  </a>
+</div>
 
 <script src="./three.r128.min.js" integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ==" crossorigin="anonymous"></script>
 <script src="./landing.js"></script>
