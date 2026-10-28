@@ -27,7 +27,7 @@
       "url": "https://sirseguridad.com.ar/",
       "image": "https://sirseguridad.com.ar/og.png",
       "telephone": "+54 9 341 349-0705",
-      "priceRange": "USD 40 - USD 260",
+      "priceRange": "USD 20 - USD 130",
       "address": { "@type": "PostalAddress", "addressLocality": "Rosario", "addressRegion": "Santa Fe", "addressCountry": "AR" },
       "areaServed": { "@type": "City", "name": "Rosario, Santa Fe, Argentina" }
     },
@@ -396,6 +396,14 @@ section{position:relative}
 .plan .price{margin-top:8px;display:flex;align-items:baseline;gap:8px;color:var(--paper)}
 .plan .price small{font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
 .plan .price b{font-size:34px;font-weight:700;letter-spacing:-.03em}
+.plan .price{flex-wrap:wrap;column-gap:10px}
+.plan .price s{font:500 18px/1 var(--display);color:var(--mute);text-decoration-thickness:2px;text-decoration-color:var(--red)}
+.plan .price .off{align-self:center;font:700 11px/1 var(--mono);letter-spacing:.08em;background:var(--lime);color:var(--ink);padding:5px 7px}
+.promo{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:22px;color:var(--soft);font-size:clamp(16px,1.3vw,18px)}
+.promo b,.promo-chip b{font:700 13px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;background:var(--lime);color:var(--ink);padding:7px 9px}
+.promo-chip{display:inline-flex;align-items:center;gap:12px;margin-top:28px;padding:6px 14px 6px 6px;border:1px solid rgba(198,255,61,.45);color:var(--paper);font:500 14px/1.3 var(--body);text-decoration:none;transition:border-color .2s}
+.promo-chip:hover{border-color:var(--lime)}
+.promo-chip + .ask{margin-top:14px}
 .plan .price.ask b{font-size:24px}
 .plan ul{list-style:none;padding:0;margin:16px 0 26px;display:grid;gap:11px;color:var(--soft);font-size:15px}
 .plan li{display:flex;gap:10px}.plan li::before{content:"+";font:700 14px/1.5 var(--mono);color:var(--lime);flex:none}
@@ -487,6 +495,7 @@ footer{border-top:1px solid var(--line);overflow:hidden}
       <span class="kicker">Auditorías de ciberseguridad · Rosario, Santa Fe</span>
       <h1 data-decrypt>Encontramos tus fallas <span class="lime">antes que</span> <span class="stroke">un atacante.</span></h1>
       <p class="lead">Revisamos las computadoras, la red y la nube de tu pyme y te entregamos un informe claro: qué está expuesto, qué es urgente y cómo resolverlo. Solo lectura, sin frenar nada.</p>
+      <a class="promo-chip" href="#planes"><b>50% off</b> Precio de lanzamiento en todos los planes <span class="arr" aria-hidden="true">→</span></a>
       <form class="ask" data-ask novalidate aria-labelledby="askT1">
         <p class="ask-t" id="askT1">Pedí asesoramiento sin cargo</p>
         <div class="ask-f">
@@ -676,28 +685,29 @@ footer{border-top:1px solid var(--line);overflow:hidden}
   <div class="wrap">
     <div class="tag">Planes</div>
     <h2 class="h2 rv" data-decrypt>Elegí <span class="lime">cuánto revisamos.</span></h2>
+    <p class="promo"><b>50% off</b> Precio de lanzamiento en todos los planes, por tiempo limitado.</p>
     <div class="plans">
       <article class="plan tilt">
         <h3>Chequeo Express</h3>
         <p class="for">Para 1 a 3 computadoras</p>
-        <p class="price"><small>Desde</small><b>USD 40</b></p>
+        <p class="price"><small>Desde</small><s><span class="sr">Antes </span>USD 40</s><b><span class="sr">Ahora </span>USD 20</b><span class="off">−50%</span></p>
         <ul><li>Revisión de los equipos</li><li>Informe con semáforo y prioridades</li><li>Ideal para arrancar</li></ul>
-        <a class="btn btn-line" href="https://wa.me/5493413490705?text=Hola%20SIR!%20Quiero%20consultar%20por%20el%20Chequeo%20Express." target="_blank" rel="noopener">Consultar</a>
+        <a class="btn btn-line" href="https://wa.me/5493413490705?text=Hola%20SIR!%20Quiero%20consultar%20por%20el%20Chequeo%20Express%20con%2050%25%20off." target="_blank" rel="noopener">Consultar</a>
       </article>
       <article class="plan best tilt">
         <span class="badge">Recomendado</span>
         <h3>Auditoría Pyme</h3>
         <p class="for">Para una oficina típica</p>
-        <p class="price"><small>Desde</small><b>USD 150</b></p>
+        <p class="price"><small>Desde</small><s><span class="sr">Antes </span>USD 150</s><b><span class="sr">Ahora </span>USD 75</b><span class="off">−50%</span></p>
         <ul><li>Hasta 10 equipos</li><li>Router o firewall</li><li>Microsoft 365 o Google Workspace</li><li>Reunión de presentación del informe</li></ul>
-        <a class="btn btn-lime" href="https://wa.me/5493413490705?text=Hola%20SIR!%20Quiero%20consultar%20por%20la%20Auditor%C3%ADa%20Pyme." target="_blank" rel="noopener">Consultar <span class="arr" aria-hidden="true">→</span></a>
+        <a class="btn btn-lime" href="https://wa.me/5493413490705?text=Hola%20SIR!%20Quiero%20consultar%20por%20la%20Auditor%C3%ADa%20Pyme%20con%2050%25%20off." target="_blank" rel="noopener">Consultar <span class="arr" aria-hidden="true">→</span></a>
       </article>
       <article class="plan tilt">
         <h3>Auditoría Integral</h3>
         <p class="for">Con servidores o más equipos</p>
-        <p class="price"><small>Desde</small><b>USD 260</b></p>
+        <p class="price"><small>Desde</small><s><span class="sr">Antes </span>USD 260</s><b><span class="sr">Ahora </span>USD 130</b><span class="off">−50%</span></p>
         <ul><li>Todo lo del plan Pyme</li><li>Servidores Linux</li><li>Plan de acción a 30, 60 y 90 días</li></ul>
-        <a class="btn btn-line" href="https://wa.me/5493413490705?text=Hola%20SIR!%20Quiero%20consultar%20por%20la%20Auditor%C3%ADa%20Integral." target="_blank" rel="noopener">Consultar</a>
+        <a class="btn btn-line" href="https://wa.me/5493413490705?text=Hola%20SIR!%20Quiero%20consultar%20por%20la%20Auditor%C3%ADa%20Integral%20con%2050%25%20off." target="_blank" rel="noopener">Consultar</a>
       </article>
     </div>
     <p class="note">Precios en dólares, se pagan en pesos al tipo de cambio del día. El precio final depende de la cantidad de equipos y servicios: escribinos y te pasamos una propuesta.</p>

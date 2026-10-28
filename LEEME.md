@@ -45,6 +45,7 @@ no tenerlo), y en `.well-known/security.txt`: en GitHub, *Add file → Create ne
 ## Datos a mantener
 - WhatsApp: `5493413490705` (links `wa.me` en la landing; constantes `WHATSAPP` en `assets/js/chequeo.js`).
 - Precios en la web: Express "Desde USD 40", Pyme "Desde USD 150", Integral "Desde USD 260" (fuente: `PAQUETE-COMERCIAL.md`).
+- **Promo activa desde el 28/10/2026: 50% off en todo** (USD 20 / 75 / 130), con el precio anterior tachado, aviso en el inicio y en Planes, y "con 50% off" en los mensajes de WhatsApp de cada plan. Dura hasta que Jerónimo diga. Para sacarla: volver a `<b>USD 40</b>` etc. y borrar `.promo`, `.promo-chip`, `<s>` y `.off`; `priceRange` del JSON-LD a "USD 40 - USD 260".
 - Contadores de controles (21 Windows · 11 red · 12 Linux · 8 nube = 52): tienen que coincidir con el toolkit.
   Nunca publicar un número que la herramienta no tenga.
 - Chequeo: `Metodología SIR v1.0`. Si cambian preguntas, pesos o umbrales, subir la versión.
