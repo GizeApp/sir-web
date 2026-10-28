@@ -2,7 +2,7 @@
 <html lang="es-AR">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; media-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SIR · Auditorías de ciberseguridad para pymes en Rosario</title>
@@ -192,6 +192,25 @@ section{position:relative}
 .facts b{display:block;font:800 30px/1 var(--display);letter-spacing:-.03em}
 .facts span{font:500 11px/1.4 var(--mono);color:var(--mute);letter-spacing:.12em;text-transform:uppercase}
 
+/* =============== PEDIDO RÁPIDO (arriba y al final): arma el mensaje y abre WhatsApp, no guarda nada =============== */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ask{margin-top:32px;max-width:560px;padding:20px;border:1px solid var(--line-2);background:rgba(20,20,23,.82);backdrop-filter:blur(6px)}
+.ask-t{font:600 13px/1.2 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--lime)}
+.ask-f{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.ask-f label{display:block;min-width:0}
+.ask input,.ask select{width:100%;height:50px;padding:0 14px;background:var(--ink);border:1px solid var(--line-2);color:var(--paper);font:400 16px/1 var(--body);border-radius:0;outline:none;transition:border-color .2s}
+.ask input::placeholder{color:var(--mute)}
+.ask select:invalid,.ask select.empty{color:var(--mute)}
+.ask input:focus,.ask select:focus{border-color:var(--lime)}
+.ask input[aria-invalid="true"]{border-color:var(--amber)}
+.ask .btn{width:100%;margin-top:12px}
+.ask-n{margin-top:10px;font-size:13px;color:var(--mute)}
+.ask-n.err{color:var(--amber)}
+.ask-alt{display:inline-flex;gap:8px;margin-top:16px;color:var(--soft);font:500 14px/1.4 var(--mono);text-decoration:none;border-bottom:1px solid var(--line-2);padding-bottom:3px}
+.ask-alt:hover{color:var(--lime);border-color:var(--lime)}
+.final .ask{width:100%;margin:38px auto 0;text-align:left}
+@media (max-width:520px){.ask{padding:16px}.ask-f{grid-template-columns:1fr}}
+
 .stage{position:relative;height:min(78vh,700px);min-height:460px}
 #three{position:absolute;inset:-40px -80px -20px -40px;width:calc(100% + 120px);height:calc(100% + 60px);display:block}
 .hud{position:absolute;left:0;right:0;bottom:0;display:grid;grid-template-columns:1fr auto;gap:14px;align-items:end;pointer-events:none}
@@ -227,6 +246,18 @@ section{position:relative}
 .count span{display:block;margin-top:10px;font:500 11px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
 .count b small{font-size:.4em;color:var(--lime);margin-left:4px;letter-spacing:0}
 @media (max-width:900px){.counts .wrap{grid-template-columns:repeat(2,1fr)}.count{border-left:0;border-top:1px solid var(--line);padding-left:0}.count:last-child{grid-column:span 2}}
+
+/* =============== QUÉ REVISAMOS =============== */
+.stack{border-top:1px solid var(--line);padding-block:30px 22px;background:var(--ink-2)}
+.stack-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 40px}
+.stack-g{display:flex;flex-wrap:wrap;align-items:center;gap:10px 24px}
+.stack-l{font:500 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.stack-n{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px 26px}
+.stack-n li{font:700 clamp(17px,1.6vw,22px)/1.2 var(--display);letter-spacing:-.02em;color:var(--soft);transition:color .2s}
+.stack-n li:hover{color:var(--paper)}
+.stack-n.std li{color:var(--lime)}
+.stack-note{margin-top:16px;font-size:12px;color:var(--mute)}
+@media (max-width:900px){.stack-l{flex-basis:100%}}
 
 /* =============== CADENA DE ATAQUE =============== */
 .chain-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:30px}
@@ -329,6 +360,13 @@ section{position:relative}
 .p-step::after{content:"";position:absolute;left:0;top:0;height:2px;width:100%;background:var(--lime);transform:scaleX(0);transform-origin:0;transition:transform .5s}
 .p-step:hover::after{transform:scaleX(1)}
 @media (max-width:900px){.proto{grid-template-columns:1fr}.p-step{border-left:0;border-top:1px solid var(--line)}.p-step:first-child{border-top:0}}
+
+/* =============== LOOPS DE LOS REELS =============== */
+.loops{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:28px}
+.loop{margin:0;border:1px solid var(--line);background:var(--ink-2)}
+.loop video{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;background:var(--ink-2)}
+.loop figcaption{padding:12px 14px;font:500 12px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--soft);border-top:1px solid var(--line)}
+@media (max-width:900px){.loops{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:78%;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}.loop{scroll-snap-align:start}}
 
 /* =============== QUIÉN AUDITA =============== */
 .who{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:clamp(32px,6vw,90px);align-items:center;margin-top:60px}
@@ -449,10 +487,18 @@ footer{border-top:1px solid var(--line);overflow:hidden}
       <span class="kicker">Auditorías de ciberseguridad · Rosario, Santa Fe</span>
       <h1 data-decrypt>Encontramos tus fallas <span class="lime">antes que</span> <span class="stroke">un atacante.</span></h1>
       <p class="lead">Revisamos las computadoras, la red y la nube de tu pyme y te entregamos un informe claro: qué está expuesto, qué es urgente y cómo resolverlo. Solo lectura, sin frenar nada.</p>
-      <div class="cta-row">
-        <a class="btn btn-lime" href="chequeo.html">Hacé el chequeo gratis <span class="arr" aria-hidden="true">→</span></a>
-        <a class="btn btn-line" href="https://wa.me/5493413490705?text=Hola%20SIR!%20Quiero%20consultar%20por%20una%20auditor%C3%ADa." target="_blank" rel="noopener">Hablar por WhatsApp</a>
-      </div>
+      <form class="ask" data-ask novalidate aria-labelledby="askT1">
+        <p class="ask-t" id="askT1">Pedí asesoramiento sin cargo</p>
+        <div class="ask-f">
+          <label><span class="sr">Tu nombre</span><input name="nombre" autocomplete="name" placeholder="Tu nombre" maxlength="60" required></label>
+          <label><span class="sr">Empresa</span><input name="empresa" autocomplete="organization" placeholder="Empresa" maxlength="80"></label>
+          <label><span class="sr">Cantidad de computadoras</span><select name="equipos"><option value="">¿Cuántas computadoras?</option><option>1 a 3</option><option>4 a 10</option><option>11 a 25</option><option>más de 25</option></select></label>
+          <label><span class="sr">Sobre qué querés asesoramiento</span><select name="interes"><option value="">¿Sobre qué?</option><option>el Chequeo Express</option><option>la Auditoría Pyme</option><option>la Auditoría Integral</option><option>qué me conviene</option></select></label>
+        </div>
+        <button class="btn btn-lime" type="submit">Pedir por WhatsApp <span class="arr" aria-hidden="true">→</span></button>
+        <p class="ask-n" aria-live="polite">Se abre WhatsApp con tu mensaje listo. No guardamos tus datos.</p>
+      </form>
+      <a class="ask-alt" href="chequeo.html">¿Preferís empezar solo? Hacé el chequeo gratis en 5 minutos <span class="arr" aria-hidden="true">→</span></a>
       <div class="facts">
         <div><b>½ día</b><span>en tu empresa</span></div>
         <div><b>72 hs</b><span>informe listo</span></div>
@@ -474,6 +520,17 @@ footer{border-top:1px solid var(--line);overflow:hidden}
     </div>
   </div>
 </section>
+
+<!-- ================= QUÉ REVISAMOS (nombres en texto, sin logos oficiales: no somos partners) ================= -->
+<div class="stack" aria-label="Qué revisamos y con qué estándares">
+  <div class="wrap stack-in">
+    <div class="stack-g"><span class="stack-l">Revisamos</span>
+    <ul class="stack-n"><li>Windows</li><li>Microsoft 365</li><li>Google Workspace</li><li>MikroTik</li><li>FortiGate</li><li>Linux</li></ul></div>
+    <div class="stack-g"><span class="stack-l">Con estándar</span>
+    <ul class="stack-n std"><li>CIS Controls v8</li><li>Ley 25.326</li></ul></div>
+  </div>
+  <p class="wrap stack-note">Las marcas son de sus dueños. SIR audita esas plataformas de forma independiente: no vende ni representa a ninguna.</p>
+</div>
 
 <!-- ================= CONTADORES ================= -->
 <div class="counts" aria-label="Controles que revisa el sistema de auditoría">
@@ -578,6 +635,12 @@ footer{border-top:1px solid var(--line);overflow:hidden}
       <div class="p-step"><div class="big">01</div><h3>Firmamos</h3><p>Autorización y confidencialidad por escrito, con el alcance definido, antes de tocar nada.</p><span class="tag">Autorización · NDA · uso de IA</span></div>
       <div class="p-step"><div class="big">02</div><h3>Relevamos</h3><p>Medio día en tu empresa. Leemos configuraciones: no se instala, no se cambia y no se borra nada.</p><span class="tag">Equipos · red · nube</span></div>
       <div class="p-step"><div class="big">03</div><h3>Te entregamos</h3><p>Informe en 72 hs y una reunión para explicarlo, con el plan de qué resolver primero.</p><span class="tag">Resumen + anexo técnico</span></div>
+    </div>
+    <!-- Loops recortados de los reels 05 y 06 (sin sonido; se reproducen solo cuando están en pantalla) -->
+    <div class="loops">
+      <figure class="loop"><video data-loop muted loop playsinline preload="none" poster="loop-firmamos.jpg" width="544" height="680" aria-label="Animación: relevamos equipos, red, nube y servidores en solo lectura"><source src="loop-firmamos.mp4" type="video/mp4"></video><figcaption>Relevamos en solo lectura</figcaption></figure>
+      <figure class="loop"><video data-loop muted loop playsinline preload="none" poster="loop-seudonimos.jpg" width="544" height="680" aria-label="Animación: nombres y direcciones reemplazados por códigos"><source src="loop-seudonimos.mp4" type="video/mp4"></video><figcaption>Tus datos, con seudónimos</figcaption></figure>
+      <figure class="loop"><video data-loop muted loop playsinline preload="none" poster="loop-informe.jpg" width="544" height="680" aria-label="Animación: la primera página del informe con el semáforo"><source src="loop-informe.mp4" type="video/mp4"></video><figcaption>Un informe con semáforo</figcaption></figure>
     </div>
   </div>
 </section>
@@ -688,9 +751,19 @@ footer{border-top:1px solid var(--line);overflow:hidden}
   <div class="wrap final">
     <div class="tag">Siguiente paso</div>
     <h2 style="margin-top:22px" data-decrypt class="rv">Sabé cómo está <span class="lime">tu empresa.</span></h2>
+    <form class="ask" data-ask novalidate aria-labelledby="askT2">
+      <p class="ask-t" id="askT2">Hablemos de tu empresa</p>
+      <div class="ask-f">
+        <label><span class="sr">Tu nombre</span><input name="nombre" autocomplete="name" placeholder="Tu nombre" maxlength="60" required></label>
+        <label><span class="sr">Empresa</span><input name="empresa" autocomplete="organization" placeholder="Empresa" maxlength="80"></label>
+        <label><span class="sr">Cantidad de computadoras</span><select name="equipos"><option value="">¿Cuántas computadoras?</option><option>1 a 3</option><option>4 a 10</option><option>11 a 25</option><option>más de 25</option></select></label>
+        <label><span class="sr">Sobre qué querés asesoramiento</span><select name="interes"><option value="">¿Sobre qué?</option><option>el Chequeo Express</option><option>la Auditoría Pyme</option><option>la Auditoría Integral</option><option>qué me conviene</option></select></label>
+      </div>
+      <button class="btn btn-lime" type="submit">Pedir por WhatsApp <span class="arr" aria-hidden="true">→</span></button>
+      <p class="ask-n" aria-live="polite">Se abre WhatsApp con tu mensaje listo. No guardamos tus datos.</p>
+    </form>
     <div class="cta-row">
-      <a class="btn btn-lime" href="chequeo.html">Hacé el chequeo gratis <span class="arr" aria-hidden="true">→</span></a>
-      <a class="btn btn-line" href="https://wa.me/5493413490705?text=Hola%20SIR!%20Quiero%20consultar%20por%20una%20auditor%C3%ADa." target="_blank" rel="noopener">Hablar por WhatsApp</a>
+      <a class="btn btn-line" href="chequeo.html">Hacé el chequeo gratis <span class="arr" aria-hidden="true">→</span></a>
     </div>
     <div class="wa">WhatsApp +54 9 341 349-0705</div>
   </div>

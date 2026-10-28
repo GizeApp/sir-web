@@ -511,3 +511,50 @@ setTimeout(function(){ decrypt($('.hero h1'), 1100); }, reduce ? 0 : 150);
   document.querySelector('.wa-btn').addEventListener('click', hide);
   if (!seen) setTimeout(function(){ if (!dismissed) bubble.hidden = false; }, 7000);
 })();
+
+/* ---------------- Pedido rápido: arma el mensaje y abre WhatsApp (no se guarda ni se envía nada a otro lado) ---------------- */
+(function(){
+  'use strict';
+  var WA = 'https://wa.me/5493413490705?text=';
+  [].forEach.call(document.querySelectorAll('form[data-ask]'), function(f){
+    var nota = f.querySelector('.ask-n'), notaBase = nota.textContent;
+    [].forEach.call(f.querySelectorAll('select'), function(s){
+      var pinta = function(){ s.classList.toggle('empty', !s.value); };
+      s.addEventListener('change', pinta); pinta();
+    });
+    f.addEventListener('submit', function(e){
+      e.preventDefault();
+      var v = function(n){ return f.elements[n].value.trim(); };
+      var nombre = v('nombre'), empresa = v('empresa'), equipos = v('equipos'), interes = v('interes');
+      if (!nombre) {
+        f.elements.nombre.setAttribute('aria-invalid', 'true'); f.elements.nombre.focus();
+        nota.textContent = 'Poné tu nombre así sabemos con quién hablamos.'; nota.classList.add('err');
+        return;
+      }
+      f.elements.nombre.removeAttribute('aria-invalid'); nota.textContent = notaBase; nota.classList.remove('err');
+      var msg = 'Hola SIR! Soy ' + nombre + (empresa ? ', de ' + empresa : '') + '.';
+      if (equipos) msg += ' Tenemos ' + equipos + ' computadoras.';
+      msg += ' Quiero asesoramiento sobre ' + (interes || 'qué me conviene') + '.';
+      window.open(WA + encodeURIComponent(msg), '_blank', 'noopener');
+    });
+  });
+})();
+
+/* ---------------- Loops de los reels: se reproducen solo en pantalla; con "reducir movimiento" queda la imagen fija ---------------- */
+(function(){
+  'use strict';
+  var vids = [].slice.call(document.querySelectorAll('video[data-loop]'));
+  if (!vids.length || matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      var v = e.target;
+      if (e.isIntersecting) { v.preload = 'auto'; var p = v.play(); if (p && p.catch) p.catch(function(){}); }
+      else v.pause();
+    });
+  }, { threshold: .35 });
+  vids.forEach(function(v){
+    // el loop arranca con un fundido desde negro: la primera vez se saltea para no mostrar un cuadro vacío
+    v.addEventListener('loadeddata', function(){ if (v.currentTime < .35) v.currentTime = .35; }, { once: true });
+    io.observe(v);
+  });
+})();
