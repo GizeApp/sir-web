@@ -80,7 +80,7 @@
       score += PUNTOS[a] * (q.crit ? 2 : 1);
       if (a === '?') unsure++;
     });
-    let lvl = score <= 5 ? 0 : score <= 12 ? 1 : 2;           // 0 verde, 1 amarillo, 2 rojo
+    let lvl = score <= 5 ? 0 : score <= 12 ? 1 : 2;           // 0 bajo, 1 medio, 2 alto
     if (ans[0] === 'C' || ans[1] === 'C') lvl = Math.max(lvl, 1);
     if (ans[0] === 'C' && ans[1] === 'C') lvl = 2;
     if (unsure >= 4) lvl = Math.max(lvl, 1);
@@ -137,9 +137,9 @@
     if (!state.informe) state.informe = nuevoInforme();
     const inf = state.informe;
     const L = [
-      { name:'Verde', cls:'g', txt:'Tienen buenas bases. Lo que sigue es confirmar que lo que declaraste es así en todos los equipos.' },
-      { name:'Amarillo', cls:'a', txt:'Nada para alarmarse, pero hay puntos concretos que conviene resolver pronto. La mayoría tiene solución simple.' },
-      { name:'Rojo', cls:'r', txt:'Hay riesgos que hoy podrían frenar la empresa si pasa algo. La buena noticia: se resuelven rápido una vez que sabés dónde están.' },
+      { name:'Riesgo bajo', cls:'g', txt:'Tienen buenas bases. Lo que sigue es confirmar que lo que declaraste es así en todos los equipos.' },
+      { name:'Riesgo medio', cls:'a', txt:'Nada para alarmarse, pero hay puntos concretos que conviene resolver pronto. La mayoría tiene solución simple.' },
+      { name:'Riesgo alto', cls:'r', txt:'Hay riesgos que hoy podrían frenar la empresa si pasa algo. La buena noticia: se resuelven rápido una vez que sabés dónde están.' },
     ][r.lvl];
     const sevTag = a => a === 'C' ? '<span class="tag sev-C">Urgente</span>' : a === '?' ? '<span class="tag sev-u">No sabés</span>' : '<span class="tag sev-B">A mejorar</span>';
     const prios = r.top.map(i => {
@@ -166,9 +166,6 @@
         ${state.info.rubro ? `<div><dt>Rubro</dt><dd>${esc(state.info.rubro)}</dd></div>` : ''}
       </dl>
       <div class="verdict">
-        <div class="lights" role="img" aria-label="Semáforo en ${L.name.toLowerCase()}">
-          <i class="r ${r.lvl === 2 ? 'on' : ''}"></i><i class="a ${r.lvl === 1 ? 'on' : ''}"></i><i class="g ${r.lvl === 0 ? 'on' : ''}"></i>
-        </div>
         <div>
           <h1 class="lvl-${L.cls}">${L.name}</h1>
           <div class="score">PUNTAJE DE RIESGO ${r.score} / ${r.max}${r.unsure ? ` · ${r.unsure} "NO SÉ"` : ''}</div>
@@ -187,8 +184,8 @@
         <ul>
           <li>Cada respuesta suma puntos de riesgo: <b>A = 0</b>, <b>B o "No sé" = 1</b>, <b>C = 2</b>.</li>
           <li>Copias de seguridad y correo son <b>críticos</b> y valen el doble. Máximo posible: 24.</li>
-          <li><b>Verde</b> 0 a 5 · <b>Amarillo</b> 6 a 12 · <b>Rojo</b> 13 o más.</li>
-          <li>Si copias de seguridad o correo están en C, el resultado es al menos amarillo; si están las dos, es rojo. Con 4 o más "No sé", al menos amarillo.</li>
+          <li><b>Riesgo bajo</b> 0 a 5 · <b>Riesgo medio</b> 6 a 12 · <b>Riesgo alto</b> 13 o más.</li>
+          <li>Si copias de seguridad o correo están en C, el resultado es al menos riesgo medio; si están las dos, es riesgo alto. Con 4 o más "No sé", al menos riesgo medio.</li>
           <li>Las prioridades se ordenan por gravedad de la respuesta y, a igual gravedad, por el impacto del control.</li>
         </ul>
         <p class="note">Cada pregunta corresponde a una salvaguarda de los CIS Controls v8, grupo de implementación 1 (higiene básica para organizaciones chicas). ${METODO}.</p>
@@ -211,7 +208,7 @@
   }
 
   function resumen(r) {
-    const L = ['VERDE', 'AMARILLO', 'ROJO'][r.lvl];
+    const L = ['RIESGO BAJO', 'RIESGO MEDIO', 'RIESGO ALTO'][r.lvl];
     const resp = Q.map((_, i) => `${i + 1}${state.ans[i]}`).join(' ');
     const i = state.info;
     return `Hola SIR! Hice el chequeo inicial (${state.informe ? state.informe.id : 'sin ID'}).\n` +

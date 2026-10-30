@@ -1,12 +1,12 @@
 # Sitio web SIR
-nDiseño (desde 2026-10-30): pensado para el dueño de una pyme, no para gente de sistemas. Fondo papel, Figtree, texto grande, colores de siempre (negro #0B0B0C, papel #F4F2EE, lima #C6FF3D; el lima va de relleno con texto negro, nunca como texto sobre claro) y el semáforo del informe como único recurso visual. Movimiento con el mismo criterio que gize.ar (entrada por palabras, sección fija con el scroll, aparición al bajar), hecho con CSS y `landing.js`. Los `loop-*`, `three.r128.min.js` y las fuentes viejas ya no se usan.
+nDiseño (desde 2026-10-30): pensado para el dueño de una pyme, no para gente de sistemas. Fondo papel, Figtree, texto grande, colores de siempre (negro #0B0B0C, papel #F4F2EE, lima #C6FF3D; el lima va de relleno con texto negro, nunca como texto sobre claro) y el logo como único recurso visual. Movimiento con una sola idea, "las cosas encajan": las piezas del logo se juntan una vez, la portada entra en 1,2 s, y solo el fondo y el símbolo se mueven de forma continua (se frenan fuera de pantalla). Hecho con CSS y `landing.js`. Los `loop-*`, `three.r128.min.js` y las fuentes viejas ya no se usan.
 
 Sitio estático, sin build: se sube la carpeta tal cual (publicado en GitHub Pages, repo `sir-web`).
 
 ```
 sitio/
 ├── index.html              landing
-├── chequeo.html            chequeo gratis (semáforo + informe PDF, todo en el navegador)
+├── chequeo.html            chequeo gratis (nivel de riesgo + informe PDF, todo en el navegador)
 ├── og.png                  vista previa al compartir el link (1200×630)
 ├── robots.txt · sitemap.xml para buscadores (los datos estructurados JSON-LD van en el <head> de index.html)
 ├── loop-*.mp4 · loop-*.jpg  loops 4:5 de los reels 05 y 06 (544×680, sin sonido, ~200 KB) y su imagen fija

@@ -33,9 +33,12 @@
       if (!e.isIntersecting) return; e.target.classList.add('in'); io.unobserve(e.target);
     }); }, { threshold:.12, rootMargin:'0px 0px -6% 0px' });
     els.forEach(function(el){ io.observe(el); });
-    // El interruptor se activa solo una vez, la primera vez que se ve la sección
-    if (risks) { var ior = new IntersectionObserver(function(es){ if (!es[0].isIntersecting) return; ior.disconnect();
-      setTimeout(function(){ if (!tocado) pone(true); }, 2400); }, { threshold:.6 }); ior.observe(risks); }
+    // El interruptor no cambia solo: da una pista una vez, la primera vez que se ve
+    if (sw) { var iop = new IntersectionObserver(function(es){ if (!es[0].isIntersecting) return; iop.disconnect();
+      setTimeout(function(){ if (!tocado) sw.classList.add('pista'); }, 1200); }, { threshold:1 }); iop.observe(sw); }
+    // Lo que se repite se frena cuando la portada sale de pantalla
+    var hero = document.querySelector('.hero');
+    new IntersectionObserver(function(es){ hero.classList.toggle('quieto', !es[0].isIntersecting); }).observe(hero);
   } else els.forEach(function(el){ el.classList.add('in'); });
 
   // Todo lo que depende del scroll, en un solo cuadro
