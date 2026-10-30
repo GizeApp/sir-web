@@ -1,4 +1,5 @@
 # Sitio web SIR
+nDiseño (desde 2026-10-30): pensado para el dueño de una pyme, no para gente de sistemas. Fondo papel, Figtree, texto grande, colores de siempre (negro #0B0B0C, papel #F4F2EE, lima #C6FF3D; el lima va de relleno con texto negro, nunca como texto sobre claro) y el semáforo del informe como único recurso visual. Movimiento con el mismo criterio que gize.ar (entrada por palabras, sección fija con el scroll, aparición al bajar), hecho con CSS y `landing.js`. Los `loop-*`, `three.r128.min.js` y las fuentes viejas ya no se usan.
 
 Sitio estático, sin build: se sube la carpeta tal cual (publicado en GitHub Pages, repo `sir-web`).
 
@@ -11,8 +12,9 @@ sitio/
 ├── loop-*.mp4 · loop-*.jpg  loops 4:5 de los reels 05 y 06 (544×680, sin sonido, ~200 KB) y su imagen fija
 │                           se rehacen con ffmpeg: recorte crop=1080:1350:0:110 + fundidos de 0,35 s (ver git log)
 ├── favicon.png · apple-touch-icon.png
-├── fonts.css · *.woff2     Unbounded + JetBrains Mono alojadas acá (sin Google Fonts)
-├── landing.js · chequeo.js · js-flag.js
+├── fonts.css · figtree-*.woff2  Figtree alojada acá (sin Google Fonts)
+├── logo-sir.svg            logo Encastre (lockup recortado de marca/logo-nuevo/kit)
+├── landing.js · chequeo.js   burbuja y formulario de WhatsApp · chequeo
 ├── three.r128.min.js       copia local verificada con SRI (sha512 = el publicado por cdnjs)
 ├── .nojekyll               para que GitHub Pages publique .well-known/
 └── .well-known/
